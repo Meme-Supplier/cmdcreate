@@ -9,7 +9,7 @@ fn return_args() -> Vec<String> {
 
 fn display_usage() {
     let lines: [&str; 7] = [
-        "cmdcreate v0.1",
+        "cmdcreate v0.2",
         "",
         "Usage:",
         "",
