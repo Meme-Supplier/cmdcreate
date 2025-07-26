@@ -29,6 +29,11 @@ pub fn create() {
 
         // Create symlink
         run_shell_command(&format!("sudo ln -sf {exe_str} {name}"));
+
+        // print result summary
+        println!("Success! Created executable:");
+        println!("  Script path: {exe_str}");
+        println!("  Symlink path: {name}");
     } else {
         crate::display_usage();
     }
