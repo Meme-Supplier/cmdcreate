@@ -1,4 +1,4 @@
-# cmdcreate v0.2
+# cmdcreate v0.3
 Allows you to create custom commands for your custom scripts. Works on any Linux system.
 
 ## Usage:
