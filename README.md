@@ -16,14 +16,21 @@ Flags:
 ```
 
 ## Installation
+
+**Arch Linux users**
+
+### Install
+`yay -S cmdcreate`
+
+### Remove
+`yay -Rns cmdcreate`
+
+**Everyone else**
 ```
 $ sudo mv cmdcreate-<ver>-bin cmdcreate
 $ sudo chmod +x cmdcreate
 $ sudo cp cmdcreate /usr/bin
 ```
-
-## Removal
-`$ sudo rm /usr/bin/cmdcreate`
 
 ## Examples
 
