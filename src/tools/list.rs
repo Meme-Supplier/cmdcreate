@@ -51,7 +51,7 @@ pub fn list() {
 
     let mut alias_map = HashMap::new();
 
-    for bin_dir in ["/usr/bin", "/usr/local/bin"] {
+    for bin_dir in ["/usr/bin"] {
         if let Ok(entries) = fs::read_dir(bin_dir) {
             for entry in entries.flatten() {
                 let path = entry.path();
@@ -67,18 +67,15 @@ pub fn list() {
 
     for script_path in installed_scripts {
         let abs_script = canonicalize_or(&script_path);
+        let file_stem = script_path
+            .file_stem()
+            .unwrap_or_default()
+            .to_string_lossy();
 
         if let Some(alias_path) = alias_map.get(&abs_script) {
-            println!(
-                "{} -> {}",
-                script_path.file_name().unwrap().to_string_lossy(),
-                alias_path.display()
-            );
+            println!("{file_stem} -> {}", alias_path.display());
         } else {
-            println!(
-                "{} -> (no symlink found)",
-                script_path.file_name().unwrap().to_string_lossy()
-            );
+            println!("{file_stem} -> (no symlink found)");
         }
     }
 }
