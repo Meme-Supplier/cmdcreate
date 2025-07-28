@@ -10,7 +10,7 @@ list
 ```
 
 ## Installation
-`$ sudo cp cmdcreate-<ver>-bin /usr/bin`
+`$ sudo chmod +x cmdcreate-<ver>-bin && sudo cp cmdcreate-<ver>-bin /usr/bin`
 
 ## Removal
 `$ sudo rm cmdcreate-<ver>-bin /usr/bin`
