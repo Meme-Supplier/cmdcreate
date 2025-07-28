@@ -4,8 +4,8 @@ Allows you to create custom commands for your custom scripts. Works on any Linux
 ## Usage:
 
 ```
-create <name> <file> <contents>
-remove <name> <file>
+create <name> <contents>
+remove <name>
 list
 ```
 
@@ -19,13 +19,31 @@ list
 
 ### Creation
 ```
-$ ./cmdcreate create /usr/bin/say-hi say-hi.sh "echo hi"
+$ ./cmdcreate create say-hi "echo hi"
+
+Success! Created executable:
+  Script path: /home/user/.local/share/cmdcreate/files/say-hi
+  Symlink path: /usr/bin/say-hi
+
 $ say-hi
 hi
 ```
 
 ### Deletion
 ```
-$ ./cmdcreate remove /usr/bin/say-hi say-hi.sh
-Removed ~/.local/share/cmdcreate/files/say-hi.sh and symlink /usr/bin/say-hi
+$ ./cmdcreate remove say-hi
+Are you sure you want to delete command "say-hi"? (y/N)
+y
+
+Removed command "say-hi"
+```
+
+### List commands
+```
+$ ./cmdcreate list
+Installed commands:
+
+<command> <symlink>
+
+say-hi -> /usr/bin/say-hi
 ```
