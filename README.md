@@ -15,9 +15,9 @@ Flags:
 --supported_editors         Displays supported text editors
 ```
 
-## Installation
+# Installation
 
-**Arch Linux users**
+##
 
 ### Install
 `yay -S cmdcreate`
