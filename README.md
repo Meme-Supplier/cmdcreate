@@ -17,7 +17,7 @@ Flags:
 
 # Installation
 
-##
+## Arch Linux
 
 ### Install
 `yay -S cmdcreate`
@@ -25,7 +25,7 @@ Flags:
 ### Remove
 `yay -Rns cmdcreate`
 
-**Everyone else**
+## Everyone else
 ```
 $ sudo mv cmdcreate-<ver>-bin cmdcreate
 $ sudo chmod +x cmdcreate
