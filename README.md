@@ -1,12 +1,18 @@
-# cmdcreate v0.3
+# cmdcreate v0.4.0
 Allows you to create custom commands for your custom scripts. Works on any Linux system.
 
 ## Usage:
 
 ```
-create <name> <contents>
-remove <name>
-list
+create <name> <contents>    Create a custom command
+remove <name>               Remove a custom command
+edit <name>                 Modify a custom command
+list                        Display custom commands
+
+Flags:
+
+--version                   Displays cmdcreate's version
+--supported_editors         Displays supported text editors
 ```
 
 ## Installation
