@@ -10,10 +10,14 @@ list
 ```
 
 ## Installation
-`$ sudo chmod +x cmdcreate-<ver>-bin && sudo cp cmdcreate-<ver>-bin /usr/bin`
+```
+$ sudo mv cmdcreate-<ver>-bin cmdcreate
+$ sudo chmod +x cmdcreate
+$ sudo cp cmdcreate /usr/bin
+```
 
 ## Removal
-`$ sudo rm cmdcreate-<ver>-bin /usr/bin`
+`$ sudo rm /usr/bin/cmdcreate`
 
 ## Examples
 
