@@ -19,3 +19,7 @@
 ## v0.4.1
 - Added `code-insiders` as a supported editor
 - Overhauled the intro
+
+## v0.4.2
+- Added `vi` and `emacs` as supported text editors
+- Added information about how updates work.
