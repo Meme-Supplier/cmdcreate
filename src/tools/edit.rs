@@ -4,7 +4,7 @@ use std::process::Command;
 
 use crate::tools::utils::run_shell_command;
 
-pub const SUPPORTED_EDITORS: [&str; 8] = ["nvim", "vim", "nano", "micro", "code", "code-insiders", "gedit", "kate"];
+pub const SUPPORTED_EDITORS: [&str; 10] = ["nvim", "vi", "vim", "nano", "micro", "code", "code-insiders", "gedit", "kate", "emacs"];
 
 fn is_editor_installed(editor: &str) -> bool {
     Command::new("which")
