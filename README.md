@@ -1,4 +1,4 @@
-# cmdcreate v0.4.1
+8th# cmdcreate v0.4.1
 Allows you to create custom commands for your custom scripts. Works on any Linux system.
 
 ## Usage:
@@ -16,16 +16,6 @@ Flags:
 ```
 
 # Installation
-
-## Arch Linux
-
-### Install
-`yay -S cmdcreate`
-
-### Remove
-`yay -Rns cmdcreate`
-
-## Everyone else
 ```
 $ sudo mv cmdcreate-<ver>-bin cmdcreate
 $ sudo chmod +x cmdcreate
