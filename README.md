@@ -27,7 +27,7 @@ $ sudo chmod +x cmdcreate
 $ sudo cp cmdcreate /usr/bin
 ```
 
-## Examples
+# Example usage
 
 ### Creation
 ```
