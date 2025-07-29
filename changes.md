@@ -15,3 +15,7 @@
 - Flag and arg descriptions
 - Bug fixes
 - Other misc changes
+
+## v0.4.1
+- Added `code-insiders` as a supported editor
+- Overhauled the intro
