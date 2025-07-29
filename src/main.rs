@@ -3,27 +3,30 @@ use std::env;
 mod tools;
 use tools::{create, edit, list, remove};
 
-static PROJ_VER: &str = "v0.4.0";
+static PROJ_VER: &str = "v0.4.1";
 
 fn return_args() -> Vec<String> {
     env::args().skip(1).collect()
 }
 
 fn display_usage() {
-    let lines: [&str; 13] = [
+    let lines: [&str; 16] = [
         &format!("cmdcreate {PROJ_VER}",),
         "",
-        "Usage:",
-        "",
-        "create <name> <contents>    Create a custom command",
-        "remove <name>               Remove a custom command",
-        "edit <name>                 Modify a custom command",
-        "list                        Display custom commands",
+        "Commands:",
+        "  create <command> <contents>    Create a custom command",
+        "  remove <command>               Remove a custom command",
+        "  edit   <command>               Modify a custom command",
+        "  list                           Display installed commands",
         "",
         "Flags:",
+        "  --version                      Displays cmdcreate's version",
+        "  --supported_editors            Displays supported text editors",
         "",
-        "--version                   Displays cmdcreate's version",
-        "--supported_editors         Displays supported text editors",
+        "About:",
+        "   Cmdcreate allows you to create custom commands for your Linux Terminal",
+        "   without needing to enter the same \"complex\" commands over and over",
+        "   (unless if your are lazy like me).",
     ];
 
     for line in lines {
@@ -47,7 +50,6 @@ fn main() {
         "list" if args.len() == 1 => list::list(),
 
         // Flags
-        "--hepl" if args.len() == 1 => display_usage(),
         "--version" if args.len() == 1 => println!("{PROJ_VER}"),
         "--supported_editors" if args.len() == 1 => {
             println!("\nCurrent supported editors:\n");
@@ -56,9 +58,6 @@ fn main() {
             }
         }
 
-        _ => {
-            eprintln!("Unknown command: '{}'", args[0]);
-            display_usage();
-        }
+        _ => display_usage()
     }
 }
