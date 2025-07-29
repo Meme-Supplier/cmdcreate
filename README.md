@@ -16,6 +16,11 @@ Flags:
 ```
 
 # Installation
+
+## Arch Linux
+`$ yay -S cmdcreate`
+
+## Other
 ```
 $ sudo mv cmdcreate-<ver>-bin cmdcreate
 $ sudo chmod +x cmdcreate
