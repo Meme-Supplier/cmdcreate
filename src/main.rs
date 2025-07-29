@@ -3,14 +3,14 @@ use std::env;
 mod tools;
 use tools::{create, edit, list, remove};
 
-static PROJ_VER: &str = "v0.4.1";
+static PROJ_VER: &str = "v0.4.2";
 
 fn return_args() -> Vec<String> {
     env::args().skip(1).collect()
 }
 
 fn display_usage() {
-    let lines: [&str; 16] = [
+    let lines: [&str; 20] = [
         &format!("cmdcreate {PROJ_VER}",),
         "",
         "Commands:",
@@ -27,6 +27,10 @@ fn display_usage() {
         "   Cmdcreate allows you to create custom commands for your Linux Terminal",
         "   without needing to enter the same \"complex\" commands over and over",
         "   (unless if your are lazy like me).",
+        "",
+        "   Cmdcreate will usually get smaller, more frequent updates than larger,",
+        "   less frequent updates. You should update Cmdcreate often to stay up to",
+        "   date.",
     ];
 
     for line in lines {
