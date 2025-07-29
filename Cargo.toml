@@ -1,8 +1,8 @@
 [package]
 name = "cmdcreate"
-version = "0.4.0"
+version = "0.4.1"
 edition = "2024"
 
 [dependencies]
 shellexpand = "3.1"
-dirs = "5.0"
+dirs = "6.0"
