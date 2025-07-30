@@ -23,3 +23,8 @@
 ## v0.4.2
 - Added `vi` and `emacs` as supported text editors
 - Added information about how updates work.
+
+## v0.4.3
+- Listing commands now only displays the command names
+- Code has been cleaned up (at least a little bit)
+- `--changelog` flag: Displays cmdcreate's changelog
