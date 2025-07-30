@@ -1,16 +1,12 @@
-use std::env;
-
 mod tools;
-use tools::{create, edit, list, remove};
+use tools::*;
 
-static PROJ_VER: &str = "v0.4.2";
+use crate::tools::utils::run_shell_command;
 
-fn return_args() -> Vec<String> {
-    env::args().skip(1).collect()
-}
+static PROJ_VER: &str = "v0.4.3";
 
 fn display_usage() {
-    let lines: [&str; 20] = [
+    let lines: [&str; 21] = [
         &format!("cmdcreate {PROJ_VER}",),
         "",
         "Commands:",
@@ -22,6 +18,7 @@ fn display_usage() {
         "Flags:",
         "  --version                      Displays cmdcreate's version",
         "  --supported_editors            Displays supported text editors",
+        "  --changelog                    Displays cmdcreate's changelog",
         "",
         "About:",
         "   Cmdcreate allows you to create custom commands for your Linux Terminal",
@@ -39,7 +36,7 @@ fn display_usage() {
 }
 
 fn main() {
-    let args = return_args();
+    let args = utils::return_args();
 
     if args.is_empty() {
         display_usage();
@@ -55,6 +52,7 @@ fn main() {
 
         // Flags
         "--version" if args.len() == 1 => println!("{PROJ_VER}"),
+        "--changelog" if args.len() == 1 => run_shell_command("curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md"),
         "--supported_editors" if args.len() == 1 => {
             println!("\nCurrent supported editors:\n");
             for option in edit::SUPPORTED_EDITORS {
@@ -62,6 +60,6 @@ fn main() {
             }
         }
 
-        _ => display_usage()
+        _ => display_usage(),
     }
 }
