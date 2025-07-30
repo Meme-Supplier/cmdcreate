@@ -1,3 +1,4 @@
+use std::collections::HashMap;
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -31,12 +32,11 @@ pub fn list() {
         return;
     }
 
-    println!("Installed commands:\n\n<command> <symlink>\n");
+    println!("Installed commands:\n");
 
     let canonicalize_or = |p: &Path| fs::canonicalize(p).unwrap_or_else(|_| p.to_path_buf());
-
-    use std::collections::HashMap;
     let mut script_map = HashMap::new();
+
     for script_path in &installed_scripts {
         let abs_path = canonicalize_or(script_path);
         script_map.insert(
@@ -49,33 +49,9 @@ pub fn list() {
         );
     }
 
-    let mut alias_map = HashMap::new();
+    for script in installed_scripts {
+        let file_stem = script.file_stem().unwrap_or_default().to_string_lossy();
 
-    for bin_dir in ["/usr/bin"] {
-        if let Ok(entries) = fs::read_dir(bin_dir) {
-            for entry in entries.flatten() {
-                let path = entry.path();
-                if path.is_symlink() {
-                    if let Ok(target) = fs::read_link(&path) {
-                        let target_abs = canonicalize_or(&path.parent().unwrap().join(&target));
-                        alias_map.insert(target_abs, path);
-                    }
-                }
-            }
-        }
-    }
-
-    for script_path in installed_scripts {
-        let abs_script = canonicalize_or(&script_path);
-        let file_stem = script_path
-            .file_stem()
-            .unwrap_or_default()
-            .to_string_lossy();
-
-        if let Some(alias_path) = alias_map.get(&abs_script) {
-            println!("{file_stem} -> {}", alias_path.display());
-        } else {
-            println!("{file_stem} -> (no symlink found)");
-        }
+        println!("{file_stem}")
     }
 }
