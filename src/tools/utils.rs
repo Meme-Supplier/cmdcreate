@@ -1,5 +1,10 @@
+use std::env;
 use std::path::{Path, PathBuf};
 use std::process::{exit, Command, Stdio};
+
+pub fn return_args() -> Vec<String> {
+    env::args().skip(1).collect()
+}
 
 pub fn run_shell_command(cmd: &str) {
     if cmd.trim().is_empty() {
