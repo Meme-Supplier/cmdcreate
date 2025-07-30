@@ -1,4 +1,4 @@
-# cmdcreate v0.4.2
+# cmdcreate v0.4.3
 Cmdcreate allows you to create custom commands for your Linux Terminal without needing to enter the same "complex" commands over and over (unless if your are lazy like me).
 
 Cmdcreate will usually get smaller, more frequent updates than larger less frequent updates. You should update Cmdcreate often to stay up to date.
@@ -15,6 +15,7 @@ Flags:
 
 --version                   Displays cmdcreate's version
 --supported_editors         Displays supported text editors
+--changelog                 Displays cmdcreate's changelog
 ```
 
 # Installation
@@ -35,9 +36,7 @@ $ sudo cp cmdcreate /usr/bin
 ```
 $ ./cmdcreate create say-hi "echo hi"
 
-Success! Created executable:
-  Script path: /home/user/.local/share/cmdcreate/files/say-hi
-  Symlink path: /usr/bin/say-hi
+Success! Created command: say-hi
 
 $ say-hi
 hi
@@ -57,7 +56,5 @@ Removed command "say-hi"
 $ ./cmdcreate list
 Installed commands:
 
-<command> <symlink>
-
-say-hi -> /usr/bin/say-hi
+say-hi
 ```
