@@ -1,9 +1,9 @@
-use crate::tools::utils::{force_local_path, run_shell_command};
+use crate::tools::utils::*;
 use std::path::Path;
-use std::process;
+use std::process::id;
 
 pub fn create() {
-    let args = crate::return_args();
+    let args = return_args();
 
     if let (Some(name_arg), Some(contents)) = (args.get(1), args.get(2)) {
         let original_path = Path::new(name_arg);
@@ -30,8 +30,7 @@ pub fn create() {
         }
 
         // Write to a temp file first
-        let pid = process::id();
-        let temp_path = format!("/tmp/temp_cmd_file_{pid}.sh");
+        let temp_path = format!("/tmp/temp_cmd_file_{}.sh", id());
         std::fs::write(&temp_path, contents).expect("Failed to write temp file");
 
         // Use sudo to copy it to the final location
@@ -42,9 +41,9 @@ pub fn create() {
         run_shell_command(&format!("sudo ln -sf {exe_str} {}", name.to_string_lossy()));
 
         // print result summary
-        println!("\nSuccess! Created executable:");
-        println!("  Script path: {exe_str}");
-        println!("  Symlink path: {}", name.to_string_lossy());
+        let cmd = name.file_name().unwrap_or_default().to_string_lossy();
+
+        println!("\nSuccess! Created command: {cmd}");
     } else {
         crate::display_usage();
     }
