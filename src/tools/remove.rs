@@ -1,7 +1,7 @@
-use crate::tools::utils::{force_local_path, run_shell_command};
+use crate::tools::utils::*;
 
 pub fn remove() {
-    let args = crate::return_args();
+    let args = return_args();
 
     if let Some(name) = args.get(1) {
         let exe = force_local_path(name);
