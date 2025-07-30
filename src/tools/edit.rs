@@ -2,9 +2,20 @@ use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
 
-use crate::tools::utils::run_shell_command;
+use crate::tools::utils::*;
 
-pub const SUPPORTED_EDITORS: [&str; 10] = ["nvim", "vi", "vim", "nano", "micro", "code", "code-insiders", "gedit", "kate", "emacs"];
+pub const SUPPORTED_EDITORS: [&str; 10] = [
+    "nvim",
+    "vi",
+    "vim",
+    "nano",
+    "micro",
+    "code",
+    "code-insiders",
+    "gedit",
+    "kate",
+    "emacs",
+];
 
 fn is_editor_installed(editor: &str) -> bool {
     Command::new("which")
@@ -15,7 +26,7 @@ fn is_editor_installed(editor: &str) -> bool {
 }
 
 pub fn edit() {
-    let args = crate::return_args();
+    let args = return_args();
 
     let install_dir = dirs::home_dir()
         .expect("Home dir not found")
