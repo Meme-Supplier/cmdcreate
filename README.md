@@ -34,7 +34,7 @@ $ sudo cp cmdcreate /usr/bin
 
 ### Creation
 ```
-$ ./cmdcreate create say-hi "echo hi"
+$ cmdcreate create say-hi "echo hi"
 
 Success! Created command: say-hi
 
@@ -44,7 +44,7 @@ hi
 
 ### Deletion
 ```
-$ ./cmdcreate remove say-hi
+$ cmdcreate remove say-hi
 Are you sure you want to delete command "say-hi"? (y/N)
 y
 
@@ -53,7 +53,7 @@ Removed command "say-hi"
 
 ### List commands
 ```
-$ ./cmdcreate list
+$ cmdcreate list
 Installed commands:
 
 say-hi
