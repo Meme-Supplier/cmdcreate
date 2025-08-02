@@ -3,10 +3,10 @@ use tools::*;
 
 use crate::tools::utils::run_shell_command;
 
-static PROJ_VER: &str = "v0.4.3";
+static PROJ_VER: &str = "v0.4.4";
 
 fn display_usage() {
-    let lines: [&str; 21] = [
+    let lines: [&str; 22] = [
         &format!("cmdcreate {PROJ_VER}",),
         "",
         "Commands:",
@@ -14,6 +14,7 @@ fn display_usage() {
         "  remove <command>               Remove a custom command",
         "  edit   <command>               Modify a custom command",
         "  list                           Display installed commands",
+        "  search <command>               Searches for matched command",
         "",
         "Flags:",
         "  --version                      Displays cmdcreate's version",
@@ -49,10 +50,13 @@ fn main() {
         "remove" if args.len() >= 1 => remove::remove(),
         "edit" if args.len() >= 1 => edit::edit(),
         "list" if args.len() == 1 => list::list(),
+        "search" if args.len() >= 1 => search::search(),
 
         // Flags
         "--version" if args.len() == 1 => println!("{PROJ_VER}"),
-        "--changelog" if args.len() == 1 => run_shell_command("curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md"),
+        "--changelog" if args.len() == 1 => run_shell_command(
+            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md",
+        ),
         "--supported_editors" if args.len() == 1 => {
             println!("\nCurrent supported editors:\n");
             for option in edit::SUPPORTED_EDITORS {
