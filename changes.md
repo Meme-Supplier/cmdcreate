@@ -28,3 +28,6 @@
 - Listing commands now only displays the command names
 - Code has been cleaned up (at least a little bit)
 - `--changelog` flag: Displays cmdcreate's changelog
+
+## v0.4.4
+- `search` command: Searches for matched command
