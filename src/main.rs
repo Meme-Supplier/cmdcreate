@@ -3,10 +3,10 @@ use tools::*;
 
 use crate::tools::utils::run_shell_command;
 
-static PROJ_VER: &str = "v0.4.4";
+static PROJ_VER: &str = "v0.4.5";
 
 fn display_usage() {
-    let lines: [&str; 22] = [
+    let lines: [&str; 23] = [
         &format!("cmdcreate {PROJ_VER}",),
         "",
         "Commands:",
@@ -17,9 +17,10 @@ fn display_usage() {
         "  search <command>               Searches for matched command",
         "",
         "Flags:",
-        "  --version                      Displays cmdcreate's version",
+        "  --version                      Displays version",
         "  --supported_editors            Displays supported text editors",
-        "  --changelog                    Displays cmdcreate's changelog",
+        "  --changelog                    Displays changelog",
+        "  --license                      Displays license",
         "",
         "About:",
         "   Cmdcreate allows you to create custom commands for your Linux Terminal",
@@ -56,6 +57,9 @@ fn main() {
         "--version" if args.len() == 1 => println!("{PROJ_VER}"),
         "--changelog" if args.len() == 1 => run_shell_command(
             "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md",
+        ),
+        "--license" if args.len() == 1 => run_shell_command(
+            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE",
         ),
         "--supported_editors" if args.len() == 1 => {
             println!("\nCurrent supported editors:\n");
