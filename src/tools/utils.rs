@@ -1,6 +1,45 @@
 use std::env;
+use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::{exit, Command, Stdio};
+
+pub fn retrieve_commands(val: &str) -> Vec<PathBuf> {
+    let install_dir = dirs::home_dir()
+        .expect("Home dir not found")
+        .join(".local/share/cmdcreate/files");
+
+    if !install_dir.exists() {
+        println!("No installed commands found (directory doesn't exist)");
+        return Vec::new();
+    }
+
+    if val == "dir" {
+        return vec![install_dir];
+    }
+
+    let installed_scripts: Vec<PathBuf> = fs::read_dir(&install_dir)
+        .expect("Failed to read install directory")
+        .flatten()
+        .filter_map(|entry| {
+            let path = entry.path();
+            if path.is_file() {
+                Some(path)
+            } else {
+                None
+            }
+        })
+        .collect();
+
+    if installed_scripts.is_empty() {
+        println!("No installed commands found in: {}", install_dir.display());
+    }
+
+    if val == "installed" {
+        installed_scripts
+    } else {
+        Vec::new()
+    }
+}
 
 pub fn return_args() -> Vec<String> {
     env::args().skip(1).collect()
