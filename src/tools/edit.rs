@@ -1,5 +1,3 @@
-use std::fs;
-use std::path::PathBuf;
 use std::process::Command;
 
 use crate::tools::utils::*;
@@ -28,32 +26,12 @@ fn is_editor_installed(editor: &str) -> bool {
 pub fn edit() {
     let args = return_args();
 
-    let install_dir = dirs::home_dir()
-        .expect("Home dir not found")
-        .join(".local/share/cmdcreate/files");
+    let install_dir = retrieve_commands("dir").get(0).cloned();
 
-    if !install_dir.exists() {
-        println!("No installed commands found (directory doesn't exist)");
+    let Some(install_dir) = install_dir else {
+        println!("Install dir not found.");
         return;
-    }
-
-    let installed_scripts: Vec<PathBuf> = fs::read_dir(&install_dir)
-        .expect("Failed to read install directory")
-        .flatten()
-        .filter_map(|entry| {
-            let path = entry.path();
-            if path.is_file() {
-                Some(path)
-            } else {
-                None
-            }
-        })
-        .collect();
-
-    if installed_scripts.is_empty() {
-        println!("No installed commands found in: {}", install_dir.display());
-        return;
-    }
+    };
 
     let installed = SUPPORTED_EDITORS
         .iter()
@@ -71,7 +49,6 @@ pub fn edit() {
 
     let mut file_path = install_dir.join(file_name);
 
-    // Optional: add .sh if missing
     if file_path.extension().is_none() {
         file_path.set_extension("sh");
     }
@@ -81,6 +58,6 @@ pub fn edit() {
         return;
     }
 
-    let cmd = format!("sudo {editor} {}", file_path.display()); // remove sudo unless needed
+    let cmd = format!("{editor} {}", file_path.display());
     run_shell_command(&cmd);
 }
