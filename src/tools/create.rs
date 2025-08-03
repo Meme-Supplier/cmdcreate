@@ -11,13 +11,11 @@ pub fn create() {
         let name = if original_path.starts_with("/usr/bin") {
             original_path.to_path_buf()
         } else if original_path.parent().is_some() || original_path.is_absolute() {
-            // Starts with a path (like ./ or /something) -> use only the filename
             let filename = original_path
                 .file_name()
                 .expect("Invalid path: missing filename");
             Path::new("/usr/bin").join(filename)
         } else {
-            // No path, just a bare name like "script" -> prepend /usr/bin
             Path::new("/usr/bin").join(name_arg)
         };
 
