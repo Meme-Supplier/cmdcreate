@@ -1,6 +1,5 @@
 ## v0.2.0
-
-- When running the "create" tool, it will now show some info of what it did
+- When running the `create` tool, it will now show some info of what it did
 - Code cleanup
 
 ## v0.3.0
@@ -31,3 +30,8 @@
 
 ## v0.4.4
 - `search` command: Searches for matched command
+
+## v0.4.5
+- Cleaned up code
+- `--license` flag: Displays license
+- Tweaked the intro
