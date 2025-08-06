@@ -47,11 +47,7 @@ pub fn edit() {
         return;
     };
 
-    let mut file_path = install_dir.join(file_name);
-
-    if file_path.extension().is_none() {
-        file_path.set_extension("sh");
-    }
+    let file_path = install_dir.join(file_name);
 
     if !file_path.exists() {
         println!("File not found: {}", file_path.display());
