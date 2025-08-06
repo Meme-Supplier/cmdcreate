@@ -35,3 +35,7 @@
 - Cleaned up code
 - `--license` flag: Displays license
 - Tweaked the intro
+
+## v0.4.6
+- Code cleanup
+- `reset` command: Removes ALL installed commands
