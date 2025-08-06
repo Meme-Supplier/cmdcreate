@@ -1,7 +1,6 @@
-use std::env;
-use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::{exit, Command, Stdio};
+use std::{env, fs};
 
 pub fn retrieve_commands(val: &str) -> Vec<PathBuf> {
     let install_dir = dirs::home_dir()
