@@ -3,10 +3,10 @@ use tools::*;
 
 use crate::tools::utils::run_shell_command;
 
-static PROJ_VER: &str = "v0.4.5";
+static PROJ_VER: &str = "v0.4.6";
 
 fn display_usage() {
-    let lines: [&str; 23] = [
+    let lines: [&str; 24] = [
         &format!("cmdcreate {PROJ_VER}",),
         "",
         "Commands:",
@@ -15,6 +15,7 @@ fn display_usage() {
         "  edit   <command>               Modify a custom command",
         "  list                           Display installed commands",
         "  search <command>               Searches for matched command",
+        "  reset                          Removes all installed commands",
         "",
         "Flags:",
         "  --version                      Displays version",
@@ -52,16 +53,17 @@ fn main() {
         "edit" if args.len() >= 1 => edit::edit(),
         "list" if args.len() == 1 => list::list(),
         "search" if args.len() >= 1 => search::search(),
+        "reset" if args.len() == 1 => reset::reset(),
 
         // Flags
-        "--version" if args.len() == 1 => println!("{PROJ_VER}"),
-        "--changelog" if args.len() == 1 => run_shell_command(
-            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md",
+        "--version" => println!("{PROJ_VER}"),
+        "--changelog" => run_shell_command(
+            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md || echo -e \"\nError: Unable to retrieve changelog.\"",
         ),
-        "--license" if args.len() == 1 => run_shell_command(
-            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE",
+        "--license" => run_shell_command(
+            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE || echo -e \"\nError: Unable to retrieve license.\"",
         ),
-        "--supported_editors" if args.len() == 1 => {
+        "--supported_editors" => {
             println!("\nCurrent supported editors:\n");
             for option in edit::SUPPORTED_EDITORS {
                 println!("{option}")
