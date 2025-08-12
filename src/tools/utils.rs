@@ -1,5 +1,5 @@
 use std::path::{Path, PathBuf};
-use std::process::{exit, Command, Stdio};
+use std::process::{Command, Stdio};
 use std::{env, fs};
 
 pub fn retrieve_commands(val: &str) -> Vec<PathBuf> {
@@ -44,7 +44,10 @@ pub fn return_args() -> Vec<String> {
     env::args().skip(1).collect()
 }
 
-pub fn run_shell_command(cmd: &str) {
+pub fn run_shell_command<F>(cmd: &str, fallback: F)
+where
+    F: FnOnce(),
+{
     if cmd.trim().is_empty() {
         return;
     }
@@ -57,10 +60,15 @@ pub fn run_shell_command(cmd: &str) {
         .stderr(Stdio::inherit())
         .status()
     {
-        Ok(_) => {}
+        Ok(status) => {
+            if !status.success() {
+                // Command ran but returned a non-zero exit code
+                fallback();
+            }
+        }
         Err(e) => {
             eprintln!("{e}");
-            exit(0)
+            fallback(); // Command failed to even run
         }
     }
 }
