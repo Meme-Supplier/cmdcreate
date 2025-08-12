@@ -7,8 +7,6 @@ use crate::tools::utils::retrieve_commands;
 pub fn list() {
     let installed_scripts = retrieve_commands("installed");
 
-    println!("Installed commands:\n");
-
     let canonicalize_or = |p: &Path| fs::canonicalize(p).unwrap_or_else(|_| p.to_path_buf());
     let mut script_map = HashMap::new();
 
@@ -26,7 +24,6 @@ pub fn list() {
 
     for script in installed_scripts {
         let command = script.file_stem().unwrap_or_default().to_string_lossy();
-
-        println!("{command}")
+        println!("Installed commands:\n{command}")
     }
 }
