@@ -17,10 +17,16 @@ pub fn remove() {
         }
 
         // Remove the script file
-        run_shell_command(&format!("sudo rm -f {exe_str}"));
+        run_shell_command(&format!("sudo rm -f {exe_str}"), || {
+            println!("Error: Unable to retrieve remove command script file.");
+            return;
+        });
 
         // Remove the symlink
-        run_shell_command(&format!("sudo rm -f {name}"));
+        run_shell_command(&format!("sudo rm -f {name}"), || {
+            println!("Error: Unable to retrieve remove command symlink.");
+            return;
+        });
 
         println!("\nRemoved command \"{name}\"");
     } else {
