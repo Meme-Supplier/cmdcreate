@@ -32,11 +32,23 @@ pub fn create() {
         std::fs::write(&temp_path, contents).expect("Failed to write temp file");
 
         // Use sudo to copy it to the final location
-        run_shell_command(&format!("sudo cp {temp_path} {exe_str}"));
-        run_shell_command(&format!("sudo chmod +x {exe_str}"));
+        run_shell_command(&format!("sudo cp {temp_path} {exe_str}"), || {
+            println!("Error: Failed to copy files.");
+            return;
+        });
+        run_shell_command(&format!("sudo chmod +x {exe_str}"), || {
+            println!("Error: Failed to mark command script as executable.");
+            return;
+        });
 
         // Create symlink (optional if script is already in target path)
-        run_shell_command(&format!("sudo ln -sf {exe_str} {}", name.to_string_lossy()));
+        run_shell_command(
+            &format!("sudo ln -sf {exe_str} {}", name.to_string_lossy()),
+            || {
+                println!("Error: Failed to create command symlink.");
+                return;
+            },
+        );
 
         // print result summary
         let cmd = name.file_name().unwrap_or_default().to_string_lossy();
