@@ -9,8 +9,8 @@
 
 ## v0.4.0
 - `edit` arg: Allows you to edit your commands
-- `--version` flag: Displays the version of cmdcreate
-- `--supported_editors` flag: Displays current text editors
+- `--version` arg: Displays the version of cmdcreate
+- `--supported_editors` arg: Displays current text editors
 - Flag and arg descriptions
 - Bug fixes
 - Other misc changes
@@ -33,9 +33,15 @@
 
 ## v0.4.5
 - Cleaned up code
-- `--license` flag: Displays license
+- `--license` arg: Displays license
 - Tweaked the intro
 
 ## v0.4.6
 - Code cleanup
 - `reset` command: Removes ALL installed commands
+
+## v0.4.7
+- Bug fix
+- Partially enhanced error handling
+- `--get_offline_files` argument: Downloads files needed to use cmdcreate offline.
+- Added `vscodium` as a supported text editor
