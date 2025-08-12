@@ -2,7 +2,7 @@ use std::process::Command;
 
 use crate::tools::utils::*;
 
-pub const SUPPORTED_EDITORS: [&str; 10] = [
+pub const SUPPORTED_EDITORS: [&str; 11] = [
     "nvim",
     "vi",
     "vim",
@@ -13,6 +13,7 @@ pub const SUPPORTED_EDITORS: [&str; 10] = [
     "gedit",
     "kate",
     "emacs",
+    "vscodium",
 ];
 
 fn is_editor_installed(editor: &str) -> bool {
@@ -55,5 +56,8 @@ pub fn edit() {
     }
 
     let cmd = format!("{editor} {}", file_path.display());
-    run_shell_command(&cmd);
+    run_shell_command(&cmd, || {
+        println!("Error: Unable to execute command: \n {}", &cmd);
+        return;
+    });
 }
