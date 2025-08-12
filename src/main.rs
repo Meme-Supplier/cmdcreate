@@ -3,10 +3,10 @@ use tools::*;
 
 use crate::tools::utils::run_shell_command;
 
-static PROJ_VER: &str = "v0.4.6";
+static PROJ_VER: &str = "v0.4.7";
 
 fn display_usage() {
-    let lines: [&str; 24] = [
+    let lines: [&str; 25] = [
         &format!("cmdcreate {PROJ_VER}",),
         "",
         "Commands:",
@@ -17,11 +17,12 @@ fn display_usage() {
         "  search <command>               Searches for matched command",
         "  reset                          Removes all installed commands",
         "",
-        "Flags:",
+        "Arguments:",
         "  --version                      Displays version",
         "  --supported_editors            Displays supported text editors",
         "  --changelog                    Displays changelog",
         "  --license                      Displays license",
+        "  --get_offline_files            Downloads files for offline use.",
         "",
         "About:",
         "   Cmdcreate allows you to create custom commands for your Linux Terminal",
@@ -55,21 +56,48 @@ fn main() {
         "search" if args.len() >= 1 => search::search(),
         "reset" if args.len() == 1 => reset::reset(),
 
-        // Flags
+        // Arguments
         "--version" => println!("{PROJ_VER}"),
-        "--changelog" => run_shell_command(
-            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md || echo -e \"\nError: Unable to retrieve changelog.\"",
-        ),
-        "--license" => run_shell_command(
-            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE || echo -e \"\nError: Unable to retrieve license.\"",
-        ),
         "--supported_editors" => {
             println!("\nCurrent supported editors:\n");
             for option in edit::SUPPORTED_EDITORS {
                 println!("{option}")
             }
         }
+        "--get_offline_files" => {
+            // License
+            println!("Downloading offline files...");
 
-        _ => display_usage(),
+            run_shell_command("curl -o ~/.local/share/cmdcreate/LICENSE https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE", || {
+                println!("Error: Unable to retrieve license.");
+                return;
+            });
+            run_shell_command("curl -o ~/.local/share/cmdcreate/changes.md https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md", || {
+                println!("Error: Unable to retrieve changelog.");
+                return;
+            });
+
+            println!("Files downloaded successfully.");
+        }
+
+        "--license" => run_shell_command(
+            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE",
+            || {
+                run_shell_command("cat ~/.local/share/cmdcreate/LICENSE", || {
+                    println!("Error: Unable to display license.");
+                });
+            },
+        ),
+
+        "--changelog" => run_shell_command(
+            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md",
+            || {
+                run_shell_command("cat ~/.local/share/cmdcreate/changes.md", || {
+                    println!("Error: Unable to display changelog.");
+                });
+            },
+        ),
+
+        _ => println!("cmdcreate: Invalid command entered."),
     }
 }
