@@ -45,3 +45,7 @@
 - Partially enhanced error handling
 - `--get_offline_files` argument: Downloads files needed to use cmdcreate offline.
 - Added `vscodium` as a supported text editor
+
+## v0.4.8
+- Bug fix: Retrieving offline files always fails due to missing directory
+- `--remove_offline_files` argument: Removes offline files
