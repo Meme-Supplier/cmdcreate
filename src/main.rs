@@ -3,11 +3,11 @@ use tools::*;
 
 use crate::tools::utils::run_shell_command;
 
-static PROJ_VER: &str = "v0.4.7";
+static PROJ_VER: &str = "v0.4.8";
 
 fn display_usage() {
-    let lines: [&str; 25] = [
-        &format!("cmdcreate {PROJ_VER}",),
+    let lines: [&str; 28] = [
+        &format!("cmdcreate {PROJ_VER}"),
         "",
         "Commands:",
         "  create <command> <contents>    Create a custom command",
@@ -22,7 +22,10 @@ fn display_usage() {
         "  --supported_editors            Displays supported text editors",
         "  --changelog                    Displays changelog",
         "  --license                      Displays license",
-        "  --get_offline_files            Downloads files for offline use.",
+        "",
+        "Offline:",
+        "  --get_offline_files            Downloads files for offline use",
+        "  --remove_offline_files         Removes files for offline use",
         "",
         "About:",
         "   Cmdcreate allows you to create custom commands for your Linux Terminal",
@@ -65,13 +68,18 @@ fn main() {
             }
         }
         "--get_offline_files" => {
-            // License
             println!("Downloading offline files...");
 
+            run_shell_command("mkdir -p ~/.local/share/cmdcreate/", || {
+                println!("Error: Failed to create directory: \"~/.local/share/cmdcreate/\".");
+                return;
+            });
+            // License
             run_shell_command("curl -o ~/.local/share/cmdcreate/LICENSE https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE", || {
                 println!("Error: Unable to retrieve license.");
                 return;
             });
+            // Changelog
             run_shell_command("curl -o ~/.local/share/cmdcreate/changes.md https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md", || {
                 println!("Error: Unable to retrieve changelog.");
                 return;
@@ -79,6 +87,13 @@ fn main() {
 
             println!("Files downloaded successfully.");
         }
+
+        "--remove_offline_files" => run_shell_command(
+            "rm -f ~/.local/share/cmdcreate/changes.md ~/.local/share/cmdcreate/LICENSE",
+            || {
+                println!("Error: Unable to remove files.")
+            },
+        ),
 
         "--license" => run_shell_command(
             "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE",
