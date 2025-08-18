@@ -13,6 +13,6 @@ pub fn reset() {
     }
 
     run_shell_command("rm -f ~/.local/share/cmdcreate/files/*", || {
-        println!("Error: Unable to retrieve license.");
+        println!("Error: Unable to reset cmdcreate.");
     });
 }
