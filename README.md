@@ -32,7 +32,7 @@ Offline:
 
 ## Other
 ```
-$ sudo mv cmdcreate-<ver>-bin cmdcreate
+$ sudo mv cmdcreate-<ver>-linux-bin cmdcreate
 $ sudo chmod +x cmdcreate
 $ sudo cp cmdcreate /usr/bin
 ```
