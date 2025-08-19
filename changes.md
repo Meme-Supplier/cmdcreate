@@ -49,3 +49,7 @@
 ## v0.4.8
 - Bug fix: Retrieving offline files always fails due to missing directory
 - `--remove_offline_files` argument: Removes offline files
+
+## v0.4.9
+- You can now install cmdcreate with a `.deb` file (Found in the `releases` tab)
+- Added `bash`, `curl`, and `nano` as dependencies
