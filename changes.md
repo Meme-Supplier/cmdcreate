@@ -53,3 +53,15 @@
 ## v0.4.9
 - You can now install cmdcreate with a `.deb` file (Found in the `releases` tab)
 - Added `bash`, `curl`, and `nano` as dependencies
+
+## v0.5.0
+- Bug fixes:
+    - Fixed reporting of incorrect version
+- Enhancements/Fixes for command `list`:
+    - Now shows the number of installed commands
+    - Fixed incorrect reporting of if commands are installed
+- Enhancements/Fixes for command `search`:
+    - Now shows the number of commands that contain your input
+    - Cleaned up code
+- Misc enhancements:
+    - When you don't enter enough arguments for a command, it will now display the usage.
