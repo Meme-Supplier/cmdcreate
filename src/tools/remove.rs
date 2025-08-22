@@ -3,6 +3,11 @@ use crate::tools::utils::*;
 pub fn remove() {
     let args = return_args();
 
+    if args.len() < 2 {
+        println!("Usage:\ncmdcreate remove <command>");
+        return
+    }
+
     if let Some(name) = args.get(1) {
         let exe = force_local_path(name);
         let exe_str = exe.to_str().expect("Invalid UTF-8 in path");
