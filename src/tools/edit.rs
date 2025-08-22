@@ -27,6 +27,11 @@ fn is_editor_installed(editor: &str) -> bool {
 pub fn edit() {
     let args = return_args();
 
+    if args.len() < 2 {
+        println!("Usage:\ncmdcreate remove <command>");
+        return
+    }
+
     let install_dir = retrieve_commands("dir").get(0).cloned();
 
     let Some(install_dir) = install_dir else {
