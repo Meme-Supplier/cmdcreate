@@ -5,6 +5,11 @@ use std::process::id;
 pub fn create() {
     let args = return_args();
 
+    if args.len() < 3 {
+        println!("Usage:\ncmdcreate create <command> <contents>");
+        return
+    }
+
     if let (Some(name_arg), Some(contents)) = (args.get(1), args.get(2)) {
         let original_path = Path::new(name_arg);
 
