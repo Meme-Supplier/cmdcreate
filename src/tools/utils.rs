@@ -8,7 +8,7 @@ pub fn retrieve_commands(val: &str) -> Vec<PathBuf> {
         .join(".local/share/cmdcreate/files");
 
     if !install_dir.exists() {
-        println!("No installed commands found (directory doesn't exist)");
+        println!("Error: No installed commands found.");
         return Vec::new();
     }
 
@@ -17,7 +17,7 @@ pub fn retrieve_commands(val: &str) -> Vec<PathBuf> {
     }
 
     let installed_scripts: Vec<PathBuf> = fs::read_dir(&install_dir)
-        .expect("Failed to read install directory")
+        .expect("Error: Failed to read install directory")
         .flatten()
         .filter_map(|entry| {
             let path = entry.path();
@@ -30,7 +30,8 @@ pub fn retrieve_commands(val: &str) -> Vec<PathBuf> {
         .collect();
 
     if installed_scripts.is_empty() {
-        println!("No installed commands found in: {}", install_dir.display());
+        println!("Error: No installed commands found.");
+        return Vec::new()
     }
 
     if val == "installed" {
