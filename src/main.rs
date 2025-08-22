@@ -3,7 +3,7 @@ use tools::*;
 
 use crate::tools::utils::run_shell_command;
 
-static PROJ_VER: &str = "v0.4.8";
+static PROJ_VER: &str = "v0.5.0";
 
 fn display_usage() {
     let lines: [&str; 28] = [
@@ -50,14 +50,19 @@ fn main() {
         return;
     }
 
+    // For debugging (place as the last argument in your input)
+    if args[args.len() - 1] == "--arg_count" {
+        println!("DEBUG: ARG COUNT: {}\n", args.len())
+    }
+
     match args[0].as_str() {
         // Normal commands
-        "create" if args.len() >= 2 => create::create(),
-        "remove" if args.len() >= 1 => remove::remove(),
-        "edit" if args.len() >= 1 => edit::edit(),
-        "list" if args.len() == 1 => list::list(),
-        "search" if args.len() >= 1 => search::search(),
-        "reset" if args.len() == 1 => reset::reset(),
+        "create" => create::create(),
+        "remove" => remove::remove(),
+        "edit" => edit::edit(),
+        "list" => list::list(),
+        "search" => search::search(),
+        "reset" => reset::reset(),
 
         // Arguments
         "--version" => println!("{PROJ_VER}"),
