@@ -30,7 +30,7 @@ Offline:
 # Installation
 
 ## Arch Linux
-Install through the [AUR](aur.archlinux.org/packages/cmdcreate)
+Install through the [AUR](https://aur.archlinux.org/packages/cmdcreate)
 
 `$ yay -S cmdcreate` (Or another AUR manager such as Paru)
 
