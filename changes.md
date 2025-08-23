@@ -65,3 +65,12 @@
     - Cleaned up code
 - Misc enhancements:
     - When you don't enter enough arguments for a command, it will now display the usage.
+
+## v0.5.1
+- New arguments:
+    - `--credits`: Displays credits for cmdcreate
+    - `--debugging`: Displays flags used for debugging
+        - Flags for debugging:
+            - `--arg_count`: Displays number of arguments supplied
+            - `--force_system_shell`: Forces system shell to be used when running commands
+- Cleaned up code a bit
