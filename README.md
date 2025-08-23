@@ -1,4 +1,4 @@
-# cmdcreate v0.5.0
+# cmdcreate v0.5.1
 Cmdcreate allows you to create custom commands for your Linux Terminal without needing to enter the same "complex" commands over and over (unless if your are lazy like me).
 
 Cmdcreate will usually get smaller, more frequent updates than larger less frequent updates. You should update Cmdcreate often to stay up to date.
@@ -15,10 +15,12 @@ Commands:
   reset                          Removes all installed commands
 
 Flags:
+  --credits                      Displays credits for cmdcreate
   --version                      Displays version
   --supported_editors            Displays supported text editors
   --changelog                    Displays changelog
   --license                      Displays license
+  --debugging                    Displays flags used for debugging
 
 Offline:
   --get_offline_files            Downloads files for offline use
@@ -28,9 +30,9 @@ Offline:
 # Installation
 
 ## Arch Linux
-Install through the AUR
+Install through the [AUR](aur.archlinux.org/packages/cmdcreate)
 
-`$ yay -S cmdcreate` (Or another AUR manager)
+`$ yay -S cmdcreate` (Or another AUR manager such as Paru)
 
 ## Debian/Ubuntu
 You can get the `.deb` file from the latest [release](https://github.com/Meme-Supplier/cmdcreate/releases)
