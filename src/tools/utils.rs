@@ -45,15 +45,31 @@ pub fn return_args() -> Vec<String> {
     env::args().skip(1).collect()
 }
 
+pub fn args_contains(s: &str) -> bool {
+    return_args().contains(&s.to_string())
+}
+
+pub fn get_shell() -> String {
+    env::var("SHELL").unwrap_or_else(|_| "unknown".to_string())
+}
+
 pub fn run_shell_command<F>(cmd: &str, fallback: F)
 where
     F: FnOnce(),
 {
+
+    let shell: String;
+    if args_contains("--force_system_shell") {
+        shell = get_shell();
+    } else {
+        shell = "bash".to_string();
+    }
+
     if cmd.trim().is_empty() {
         return;
     }
 
-    match Command::new("bash")
+    match Command::new(shell)
         .arg("-c")
         .arg(cmd)
         .stdin(Stdio::inherit())
