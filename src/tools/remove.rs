@@ -11,6 +11,22 @@ pub fn remove() {
     if let Some(name) = args.get(1) {
         let exe = force_local_path(name);
         let exe_str = exe.to_str().expect("Invalid UTF-8 in path");
+        let installed_scripts: Vec<std::path::PathBuf> = retrieve_commands("installed");
+        
+        if installed_scripts.is_empty() {
+            return
+        }
+
+        for script in installed_scripts {
+            let file_stem = script.file_stem().unwrap_or_default().to_string_lossy();
+            
+            if file_stem.contains(name) {
+                break;
+            }
+
+            println!("Error: Command \"{name}\" does not seem to be installed.");
+            return
+        }
 
         // Ask for confirmation
         println!("Are you sure you want to delete command \"{name}\"? (y/N)");
