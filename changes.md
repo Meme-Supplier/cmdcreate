@@ -74,3 +74,7 @@
             - `--arg_count`: Displays number of arguments supplied
             - `--force_system_shell`: Forces system shell to be used when running commands
 - Cleaned up code a bit
+
+## v0.5.2
+- Fixed bug where cmdcreate would allow you to delete a command that doesn't exist
+- Cleaned up code a bit
