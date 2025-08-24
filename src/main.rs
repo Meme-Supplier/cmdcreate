@@ -3,7 +3,7 @@ use tools::*;
 
 use crate::tools::utils::{args_contains, run_shell_command};
 
-static PROJ_VER: &str = "v0.5.1";
+static PROJ_VER: &str = "v0.5.2";
 
 fn display_usage() {
     let lines: [&str; 25] = [
