@@ -2,6 +2,7 @@ use crate::tools::utils::*;
 
 pub fn search() {
     let args = return_args();
+    let mut count: i32 = 0;
 
     if args.len() < 2 {
         println!("Usage:\ncmdcreate search <command>");
@@ -14,8 +15,6 @@ pub fn search() {
         if installed_scripts.is_empty() {
             return
         }
-
-        let mut count: i32 = 0;
 
         for script in installed_scripts {
             let file_stem = script.file_stem().unwrap_or_default().to_string_lossy();
@@ -31,7 +30,7 @@ pub fn search() {
             return
         }
 
-        println!("--------\nFound {count} commands that contain \"{name}\"")
+        println!("--------\nFound {count} command(s) that contain \"{name}\"")
     } else {
         crate::display_usage();
     }
