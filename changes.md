@@ -78,3 +78,7 @@
 ## v0.5.2
 - Fixed bug where cmdcreate would allow you to delete a command that doesn't exist
 - Cleaned up code a bit
+
+## v0.5.3
+- Fixed bug where cmdcreate would allow you to delete a command that doesn't exist (For real this time)
+- Fixed bug where you would have insufficent write access to commands.
