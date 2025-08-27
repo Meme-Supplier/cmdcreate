@@ -68,7 +68,7 @@ Removed command "say-hi"
 ### List commands
 ```
 $ cmdcreate list
-Installed commands:
-
+Installed commands: (1 installed)
+--------
 say-hi
 ```
