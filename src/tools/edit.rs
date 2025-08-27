@@ -29,7 +29,7 @@ pub fn edit() {
 
     if args.len() < 2 {
         println!("Usage:\ncmdcreate remove <command>");
-        return
+        return;
     }
 
     let install_dir = retrieve_commands("dir").get(0).cloned();
@@ -60,7 +60,7 @@ pub fn edit() {
         return;
     }
 
-    let cmd = format!("{editor} {}", file_path.display());
+    let cmd = format!("sudo {editor} {}", file_path.display());
     run_shell_command(&cmd, || {
         println!("Error: Unable to execute command: \n {}", &cmd);
         return;
