@@ -31,7 +31,7 @@ pub fn retrieve_commands(val: &str) -> Vec<PathBuf> {
 
     if installed_scripts.is_empty() {
         println!("Error: No installed commands found.");
-        return Vec::new()
+        return Vec::new();
     }
 
     if val == "installed" {
@@ -57,7 +57,6 @@ pub fn run_shell_command<F>(cmd: &str, fallback: F)
 where
     F: FnOnce(),
 {
-
     let shell: String;
     if args_contains("--force_system_shell") {
         shell = get_shell();
@@ -95,7 +94,7 @@ pub fn force_local_path<P: AsRef<Path>>(input: P) -> PathBuf {
     let input_path = Path::new(&input_path);
 
     let allowed_root = dirs::home_dir()
-        .expect("Home dir not found")
+        .expect("Error: Home dir not found")
         .join(".local/share/cmdcreate/files");
 
     if !input_path.starts_with(&allowed_root) {
