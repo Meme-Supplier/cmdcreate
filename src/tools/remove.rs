@@ -5,27 +5,29 @@ pub fn remove() {
 
     if args.len() < 2 {
         println!("Usage:\ncmdcreate remove <command>");
-        return
+        return;
     }
 
     if let Some(name) = args.get(1) {
         let exe = force_local_path(name);
         let exe_str = exe.to_str().expect("Invalid UTF-8 in path");
         let installed_scripts: Vec<std::path::PathBuf> = retrieve_commands("installed");
-        
+
         if installed_scripts.is_empty() {
-            return
+            return;
         }
 
+        let mut count: i32 = 0;
         for script in installed_scripts {
             let file_stem = script.file_stem().unwrap_or_default().to_string_lossy();
-            
-            if file_stem.contains(name) {
-                break;
+            if file_stem == *name {
+                count += 1
             }
+        }
 
+        if count == 0 {
             println!("Error: Command \"{name}\" does not seem to be installed.");
-            return
+            return;
         }
 
         // Ask for confirmation
