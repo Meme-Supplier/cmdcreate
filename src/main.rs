@@ -3,7 +3,7 @@ use tools::*;
 
 use crate::tools::utils::{args_contains, run_shell_command};
 
-static PROJ_VER: &str = "v0.5.2";
+static PROJ_VER: &str = "v0.5.3";
 
 fn display_usage() {
     let lines: [&str; 25] = [
@@ -93,9 +93,7 @@ fn main() {
 
         "--remove_offline_files" => run_shell_command(
             "rm -f ~/.local/share/cmdcreate/changes.md ~/.local/share/cmdcreate/LICENSE",
-            || {
-                println!("Error: Unable to remove files.")
-            },
+            || println!("Error: Unable to remove files."),
         ),
 
         "--license" => run_shell_command(
