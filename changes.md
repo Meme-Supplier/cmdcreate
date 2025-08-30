@@ -82,3 +82,8 @@
 ## v0.5.3
 - Fixed bug where cmdcreate would allow you to delete a command that doesn't exist (For real this time)
 - Fixed bug where you would have insufficent write access to commands.
+
+## v0.5.4
+- New commands:
+    - `check`: Allows you to check for cmdcreate updates.
+    - `update`: Allows you to update cmdcreate easily.
