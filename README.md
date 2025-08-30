@@ -1,4 +1,4 @@
-# cmdcreate v0.5.3
+# cmdcreate v0.5.4
 Cmdcreate allows you to create custom commands for your Linux Terminal without needing to enter the same "complex" commands over and over (unless if your are lazy like me).
 
 Cmdcreate will usually get smaller, more frequent updates than larger less frequent updates. You should update Cmdcreate often to stay up to date.
@@ -21,6 +21,10 @@ Flags:
   --changelog                    Displays changelog
   --license                      Displays license
   --debugging                    Displays flags used for debugging
+
+Update:
+  check                          Checks for updates
+  update                         Updates your system
 
 Offline:
   --get_offline_files            Downloads files for offline use
