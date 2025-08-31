@@ -87,3 +87,8 @@
 - New commands:
     - `check`: Allows you to check for cmdcreate updates.
     - `update`: Allows you to update cmdcreate easily.
+
+## v0.5.5
+- Updated AUR update method by cloning the `cmdcreate` branch from the AUR directly.
+- Code optimizations and cleanup
+- Other small changes
