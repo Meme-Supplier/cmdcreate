@@ -6,10 +6,10 @@ use crate::tools::{
     utils::{args_contains, ask_for_confirmation, check_for_updates, run_shell_command},
 };
 
-static PROJ_VER: &str = "v0.5.5";
+pub static PROJ_VER: &str = "v0.5.6";
 
 fn display_usage() {
-    let lines: [&str; 28] = [
+    let lines: [&str; 27] = [
         &format!("cmdcreate {PROJ_VER}"),
         "\nCommands:",
         "  create <command> <contents>    Create a custom command",
@@ -19,7 +19,6 @@ fn display_usage() {
         "  search <command>               Searches for matched command",
         "  reset                          Removes all installed commands",
         "\nArguments:",
-        "  --credits                      Displays credits for cmdcreate",
         "  --version                      Displays version",
         "  --supported_editors            Displays supported text editors",
         "  --changelog                    Displays changelog",
@@ -78,8 +77,10 @@ fn main() {
         "update" => upgrade(),
 
         // Arguments
-        "--version" => println!("{PROJ_VER}"),
-        "--credits" => println!("cmdcreate: Credits:\n\nCreator/Maintainer:   Meme Supplier"),
+        "--version" => {
+            println!("{PROJ_VER}");
+            check_for_updates();
+        },
         "--supported_editors" => {
             println!("\nCurrent supported editors:\n");
             for option in edit::SUPPORTED_EDITORS {
