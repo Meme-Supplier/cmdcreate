@@ -139,7 +139,7 @@ pub fn check_for_updates() {
                 println!("\x1b[32mUpdate available: {current_ver} -> {latest_release}\x1b[0m");
                 upgrade();
             } else {
-                println!("Already up to date: {current_ver}");
+                println!("cmdcreate is already up to date: {current_ver}")
             }
         }
         Err(e) => eprintln!("Failed to check latest release: {e}\nTry making sure you're connected to the internet."),
