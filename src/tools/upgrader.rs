@@ -4,7 +4,10 @@ use std::process::Command;
 use reqwest::blocking::Client;
 use serde::Deserialize;
 
-use crate::tools::utils::{ask_for_confirmation, get_latest_tag, run_shell_command};
+use crate::{
+    tools::utils::{ask_for_confirmation, get_latest_tag, run_shell_command},
+    PROJ_VER,
+};
 
 #[derive(Deserialize)]
 struct Release {
@@ -19,6 +22,17 @@ struct Asset {
 }
 
 pub fn upgrade() {
+    let current_ver = PROJ_VER;
+    match get_latest_tag("Meme-Supplier", "cmdcreate") {
+        Ok(latest_release) => {
+            if current_ver == latest_release {
+                println!("Already up to date: {current_ver}\nNo need to update.");
+                return
+            }
+        }
+        Err(e) => eprintln!("Failed to check latest release: {e}\nTry making sure you're connected to the internet."),
+    }
+
     ask_for_confirmation("Do you want to upgrade cmdcreate?");
 
     println!(
@@ -98,9 +112,9 @@ pub fn upgrade() {
                     asset.name, release.tag_name
                 );
             } else {
-                println!("Error: Binary not found in latest release.");
+                eprintln!("Error: Binary not found in latest release.");
             }
         }
-        _ => println!("Error: Invalid selection. Aborted."),
+        _ => eprintln!("Error: Invalid selection. Aborted."),
     }
 }
