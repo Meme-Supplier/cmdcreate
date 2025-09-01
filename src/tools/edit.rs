@@ -2,7 +2,7 @@ use std::process::Command;
 
 use crate::tools::utils::*;
 
-pub const SUPPORTED_EDITORS: [&str; 11] = [
+pub const SUPPORTED_EDITORS: [&str; 12] = [
     "nvim",
     "vi",
     "vim",
@@ -14,6 +14,7 @@ pub const SUPPORTED_EDITORS: [&str; 11] = [
     "kate",
     "emacs",
     "vscodium",
+    "vscodium-insiders",
 ];
 
 fn is_editor_installed(editor: &str) -> bool {
