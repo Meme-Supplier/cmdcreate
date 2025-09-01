@@ -92,3 +92,8 @@
 - Updated AUR update method by cloning the `cmdcreate` branch from the AUR directly.
 - Code optimizations and cleanup
 - Other small changes
+
+## v0.5.6
+- `update` command is now disabled if you run the latest version.
+- Added `vscodium-insiders` as a supported editor
+- Removed `credits` flag, no purpose.
