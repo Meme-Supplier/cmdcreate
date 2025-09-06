@@ -97,3 +97,7 @@
 - `update` command is now disabled if you run the latest version.
 - Added `vscodium-insiders` as a supported editor
 - Removed `credits` flag, no purpose.
+
+## v0.5.7
+- When resetting cmdcreate, it will now have a double check just in case
+- cmdcreate no longer checks for updates when running `cmdcreate` with no arguments/flags
