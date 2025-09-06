@@ -6,7 +6,7 @@ use crate::tools::{
     utils::{args_contains, ask_for_confirmation, check_for_updates, run_shell_command},
 };
 
-pub static PROJ_VER: &str = "v0.5.6";
+pub static PROJ_VER: &str = "v0.5.7";
 
 fn display_usage() {
     let lines: [&str; 27] = [
@@ -42,8 +42,6 @@ fn display_usage() {
     for line in lines {
         println!("{line}");
     }
-
-    check_for_updates();
 }
 
 fn main() {
@@ -68,6 +66,7 @@ fn main() {
         "search" => search::search(),
         "reset" => {
             ask_for_confirmation("Are you sure you want remove ALL installed custom commands?\nTHIS CAN NOT BE UNDONE");
+            ask_for_confirmation("\nAre you SURE?\n(double check)");
             run_shell_command("rm -f ~/.local/share/cmdcreate/files/*", || {
                 println!("Error: Unable to reset cmdcreate.");
             });
@@ -78,9 +77,8 @@ fn main() {
 
         // Arguments
         "--version" => {
-            println!("{PROJ_VER}");
-            check_for_updates();
-        },
+            println!("cmdcreate {PROJ_VER}");
+        }
         "--supported_editors" => {
             println!("\nCurrent supported editors:\n");
             for option in edit::SUPPORTED_EDITORS {
