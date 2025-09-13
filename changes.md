@@ -101,3 +101,10 @@
 ## v0.5.7
 - When resetting cmdcreate, it will now have a double check just in case
 - cmdcreate no longer checks for updates when running `cmdcreate` with no arguments/flags
+
+## v0.5.8
+- Code optimizations
+- Added `kwrite` as a supported editor
+- `display` command: Displays the contents of a command
+    - Usage: `cmdcreate display <command>`
+- Overhaul to the intro
