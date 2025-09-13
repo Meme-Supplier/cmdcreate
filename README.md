@@ -1,4 +1,4 @@
-# cmdcreate v0.5.7
+# cmdcreate v0.5.8
 Cmdcreate allows you to create custom commands for your Linux Terminal without needing to enter the same "complex" commands over and over (unless if your are lazy like me).
 
 Cmdcreate will usually get smaller, more frequent updates than larger less frequent updates. You should update Cmdcreate often to stay up to date.
@@ -7,27 +7,28 @@ Cmdcreate will usually get smaller, more frequent updates than larger less frequ
 
 ```
 Commands:
-  create <name> <contents>       Create a custom command
-  remove <name>                  Remove a custom command
-  edit <name>                    Modify a custom command
-  list                           Display custom commands
-  search <command>               Searches for matched command
-  reset                          Removes all installed commands
+  create <name> <contents>     Create a custom command
+  remove <name>                Remove a custom command
+  edit <name>                  Modify a custom command
+  list                         Display custom commands
+  search <command>             Searches for matched command
+  reset                        Removes all installed commands
+  display <command>            Display contents of a command
+
+ Update:
+    check                      Checks for updates
+    update                     Updates your system
 
 Flags:
-  --version                      Displays version
-  --supported_editors            Displays supported text editors
-  --changelog                    Displays changelog
-  --license                      Displays license
-  --debugging                    Displays flags used for debugging
+  --version                    Displays version
+  --supported_editors          Displays supported text editors
+  --changelog                  Displays changelog
+  --license                    Displays license
+  --debugging                  Displays flags used for debugging
 
-Update:
-  check                          Checks for updates
-  update                         Updates your system
-
-Offline:
-  --get_offline_files            Downloads files for offline use
-  --remove_offline_files         Removes files for offline use
+  Offline:
+    --get_offline_files        Downloads files for offline use
+    --remove_offline_files     Removes files for offline use
 ```
 
 # Installation
