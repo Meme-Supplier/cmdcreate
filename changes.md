@@ -106,5 +106,10 @@
 - Code optimizations
 - Added `kwrite` as a supported editor
 - `display` command: Displays the contents of a command
-    - Usage: `cmdcreate display <command>`
+    - Usage: c
 - Overhaul to the intro
+
+## v0.5.9
+- `rename` command: Allows you to rename commands
+    - Usage: `cmdcreate display <command> <new name>`
+- Code optimizations
