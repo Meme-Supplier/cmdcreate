@@ -14,7 +14,7 @@ Commands:
   search <command>             Searches for matched command
   reset                        Removes all installed commands
   display <command>            Display contents of a command
-  rename <command> <new name>  Renames a command",
+  rename <command> <new name>  Renames a command
 
  Update:
     check                      Checks for updates
