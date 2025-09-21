@@ -113,3 +113,10 @@
 - `rename` command: Allows you to rename commands
     - Usage: `cmdcreate display <command> <new name>`
 - Code optimizations
+
+## v0.6.0
+- Improved error handling
+- Heavy code optimizations
+- Fixed bug in command `display`
+    - Fixed the output of `%` at the end of the output
+- Debugging flag: `--offline`: Allows you to run certain commands without an internet connection
