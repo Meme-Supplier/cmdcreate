@@ -54,7 +54,7 @@
 - You can now install cmdcreate with a `.deb` file (Found in the `releases` tab)
 - Added `bash`, `curl`, and `nano` as dependencies
 
-## v0.5.0
+# v0.5.0
 - Bug fixes:
     - Fixed reporting of incorrect version
 - Enhancements/Fixes for command `list`:
@@ -114,9 +114,14 @@
     - Usage: `cmdcreate display <command> <new name>`
 - Code optimizations
 
-## v0.6.0
+# v0.6.0
 - Improved error handling
 - Heavy code optimizations
 - Fixed bug in command `display`
     - Fixed the output of `%` at the end of the output
 - Debugging flag: `--offline`: Allows you to run certain commands without an internet connection
+
+## v0.6.1
+- Code optimizations
+- Tweaks to command `rename`
+    -  Removed the line showing how many results there are
