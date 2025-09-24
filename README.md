@@ -37,7 +37,7 @@ Flags:
 ## Arch Linux
 Install through the AUR
 
-`$ yay -S cmdcreate` (Or another AUR manager such as Paru)
+`$ yay -S cmdcreate` (Or another AUR manager)
 
 ## Debian/Ubuntu
 You can get the `.deb` file from the latest [release](https://github.com/Meme-Supplier/cmdcreate/releases)
