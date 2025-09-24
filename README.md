@@ -44,9 +44,9 @@ You can get the `.deb` file from the latest [release](https://github.com/Meme-Su
 
 ## Other
 ```
-$ sudo mv cmdcreate-<ver>-linux-bin cmdcreate
-$ sudo chmod +x cmdcreate
-$ sudo cp cmdcreate /usr/bin
+$ mv cmdcreate-<ver>-linux-bin cmdcreate
+$ chmod +x cmdcreate
+$ sudo cp cmdcreate /usr/bin/
 ```
 
 ## You can also run it portably
