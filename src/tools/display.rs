@@ -1,8 +1,8 @@
-use std::{fs, process::exit};
+use std::process::exit;
 
 use crate::tools::utils::*;
 
-pub fn display() -> std::io::Result<()> {
+pub fn display() {
     let args = return_args();
 
     if args.len() < 2 {
@@ -14,11 +14,10 @@ pub fn display() -> std::io::Result<()> {
 
     println!(
         "Contents of command: \"{cmd}\"\n--------\n{}",
-        fs::read_to_string(format!(
+        read_file_to_string(&format!(
             "{}/.local/share/cmdcreate/files/{cmd}",
-            get_home_dir().unwrap().to_string_lossy()
-        ))?
+            get_home()
+        ))
         .trim()
     );
-    Ok(())
 }
