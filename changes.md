@@ -125,3 +125,6 @@
 - Code optimizations
 - Tweaks to command `rename`
     -  Removed the line showing how many results there are
+
+## v0.6.2
+- Code optimizations
