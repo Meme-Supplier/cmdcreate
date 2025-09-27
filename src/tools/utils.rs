@@ -5,7 +5,7 @@ use std::{env, fs};
 
 use crate::tools::upgrader::upgrade;
 
-pub static PROJ_VER: &str = "v0.6.1";
+pub static PROJ_VER: &str = "v0.6.2";
 
 pub const SUPPORTED_EDITORS: [&str; 13] = [
     "nvim",
@@ -88,8 +88,8 @@ pub fn get_shell() -> String {
     env::var("SHELL").unwrap_or_else(|_| "unknown".to_string())
 }
 
-pub fn get_home_dir() -> Option<PathBuf> {
-    env::var_os("HOME").map(PathBuf::from)
+pub fn get_home() -> String {
+    env::var("HOME").unwrap_or_else(|_| "unknown".to_string())
 }
 
 pub fn run_shell_command<F>(cmd: &str, fallback: F)
@@ -163,9 +163,10 @@ pub fn check_for_updates() {
             if PROJ_VER != latest_release {
                 println!("\x1b[32mUpdate available: {PROJ_VER} -> {latest_release}\x1b[0m");
                 upgrade();
-            } else {
-                println!("cmdcreate is already up to date: {PROJ_VER}")
+                return
             }
+
+            println!("cmdcreate is already up to date: {PROJ_VER}")
         }
         Err(e) => eprintln!("Failed to check latest release: {e}\nTry making sure you're connected to the internet."),
     }
@@ -191,4 +192,14 @@ pub fn is_editor_installed(editor: &str) -> bool {
         .output()
         .map(|output| output.status.success())
         .unwrap_or(false)
+}
+
+pub fn read_file_to_string(file_path: &str) -> String {
+    match fs::read_to_string(file_path) {
+        Ok(contents) => contents,
+        Err(e) => {
+            eprintln!("Error reading file \"{file_path}\": {e}");
+            String::new()
+        }
+    }
 }
