@@ -62,7 +62,7 @@ fn main() {
         "edit" => edit::edit(),
         "list" => list::list(),
         "search" => search::search(),
-        "display" => display::display().expect("Error: Failed to run display::display()"),
+        "display" => display::display(),
         "rename" => rename::rename(),
 
         "reset" => {
@@ -99,16 +99,20 @@ fn main() {
                     "\"~/.local/share/cmdcreate/\"",
                 );
             });
+
             // License
             run_shell_command(
-                "curl -o ~/.local/share/cmdcreate/LICENSE https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE",
+                "curl -o ~/.local/share/cmdcreate/LICENSE \
+                https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE",
                 || {
                     error("Unable to retrieve license", "");
                 },
             );
+
             // Changelog
             run_shell_command(
-                "curl -o ~/.local/share/cmdcreate/changes.md https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md",
+                "curl -o ~/.local/share/cmdcreate/changes.md \
+                https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md",
                 || {
                     println!("Error: Unable to retrieve changelog.");
                 },
@@ -116,47 +120,66 @@ fn main() {
 
             println!("Files downloaded successfully.");
         }
+
         "--remove_offline_files" | "-r" => {
             run_shell_command(
-                "rm -f ~/.local/share/cmdcreate/changes.md ~/.local/share/cmdcreate/LICENSE",
+                "rm -f ~/.local/share/cmdcreate/changes.md \
+                ~/.local/share/cmdcreate/LICENSE",
                 || {
                     println!("Error: Unable to remove files.");
                 },
             );
-            println!("Files removed successfully.")
+            println!("Files removed successfully.");
         }
 
         "--license" | "-l" => {
             if args_contains("--offline") {
-                run_shell_command("cat ~/.local/share/cmdcreate/LICENSE", || {
-                    println!("Error: Offline files do not seem to be installed.")
-                });
+                println!(
+                    "{}",
+                    read_file_to_string(&format!("{}/.local/share/cmdcreate/LICENSE", get_home()))
+                        .trim()
+                );
             } else {
                 run_shell_command(
-                    "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE",
-                    || {
-                        run_shell_command("cat ~/.local/share/cmdcreate/LICENSE", || {
-                            println!("Error: Unable to display license.")
-                        })
-                    },
-                )
+            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE",
+            || {
+                println!(
+                    "{}",
+                    read_file_to_string(&format!(
+                        "{}/.local/share/cmdcreate/LICENSE",
+                        get_home()
+                    ))
+                    .trim()
+                );
+            },
+        );
             }
         }
 
         "--changelog" | "-c" => {
             if args_contains("--offline") {
-                run_shell_command("cat ~/.local/share/cmdcreate/changes.md", || {
-                    println!("Error: Offline files do not seem to be installed.")
-                });
+                println!(
+                    "{}",
+                    read_file_to_string(&format!(
+                        "{}/.local/share/cmdcreate/changes.md",
+                        get_home()
+                    ))
+                    .trim()
+                );
             } else {
                 run_shell_command(
-                    "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md",
-                    || {
-                        run_shell_command("cat ~/.local/share/cmdcreate/changes.md", || {
-                            println!("Error: Unable to display changelog.")
-                        })
-                    },
-                )
+            "curl -s https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md",
+            || {
+                println!(
+                    "{}",
+                    read_file_to_string(&format!(
+                        "{}/.local/share/cmdcreate/changes.md",
+                        get_home()
+                    ))
+                    .trim()
+                );
+            },
+        );
             }
         }
 
@@ -176,9 +199,10 @@ fn main() {
         _ => {
             if args[0].starts_with("-") {
                 error("Invalid argument:", &args[0]);
-            } else {
-                error("Invalid command:", &args[0])
+                return;
             }
+
+            error("Invalid command:", &args[0])
         }
     }
 }
