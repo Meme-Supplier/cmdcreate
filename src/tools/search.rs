@@ -27,7 +27,6 @@ pub fn search() {
 
         if count == 0 {
             error("No installed commands contain", &format!("\"{name}\""));
-            return;
         }
     }
 }
