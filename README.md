@@ -43,7 +43,7 @@ Install through the AUR
 You can get the `.deb` file from the latest [release](https://github.com/Meme-Supplier/cmdcreate/releases)
 
 ## Other
-You can the get the **x86_64** binary from the latest [release](https://github.com/Meme-Supplier/cmdcreate/releases)
+You can the get the `x86_64` binary from the latest [release](https://github.com/Meme-Supplier/cmdcreate/releases)
 
 ## You can also run it portably
 
