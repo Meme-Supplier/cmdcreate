@@ -128,3 +128,9 @@
 
 ## v0.6.2
 - Code optimizations
+
+## v0.6.3
+- Output fixes
+- Organized file structure
+- Colored text output
+- Help output overhaul
