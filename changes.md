@@ -134,3 +134,8 @@
 - Organized file structure
 - Colored text output
 - Help output overhaul
+
+## v0.6.4
+- Bug fix
+    - Fixed when upgrader retrieves wrong file name string.
+- Code optimizations
