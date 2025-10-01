@@ -5,14 +5,16 @@ mod cmds;
 use cmds::*;
 
 fn display_usage() {
-    let blue = COLORS.blue;
-    let cyan = COLORS.cyan;
-    let yellow = COLORS.yellow;
-    let magenta = COLORS.magenta;
-    let reset = COLORS.reset;
+    let (blue, cyan, yellow, magenta, reset) = (
+        COLORS.blue,
+        COLORS.cyan,
+        COLORS.yellow,
+        COLORS.magenta,
+        COLORS.reset,
+    );
 
     let lines: Vec<String> = vec![
-        format!("cmdcreate{reset} {PROJ_VER}"),
+        format!("cmdcreate {PROJ_VER}"),
         format!("Usage: cmdcreate {magenta}(flags){reset} [{blue}command{reset}, {cyan}argument{reset}] {yellow}<args> {magenta}(flags){reset}"),
         "\nCommands:".into(),
         format!("  {blue}create{yellow} <command> <contents>{reset}    Create a command"),
@@ -57,7 +59,7 @@ fn main() {
         return;
     }
 
-    if args_contains("--arg_count") {
+    if args_contains("--arg_count") | args_contains("-a") {
         println!(
             "{}DEBUG: ARG COUNT:{} {}",
             COLORS.magenta,
@@ -147,7 +149,7 @@ fn main() {
         }
 
         "--license" | "-l" => {
-            if args_contains("--offline") {
+            if args_contains("--offline") | args_contains("-o") {
                 println!(
                     "{}",
                     read_file_to_string(&format!("{}/.local/share/cmdcreate/LICENSE", get_home()))
@@ -171,7 +173,7 @@ fn main() {
         }
 
         "--changelog" | "-c" => {
-            if args_contains("--offline") {
+            if args_contains("--offline") | args_contains("-o") {
                 println!(
                     "{}",
                     read_file_to_string(&format!(
@@ -198,14 +200,14 @@ fn main() {
         }
 
         "--debugging" | "-d" => {
-            let magenta = COLORS.magenta;
-            let reset = COLORS.reset;
+            let (magenta, reset) = (COLORS.magenta, COLORS.reset);
 
             let lines: Vec<String> = vec![
-                format!("Usage: cmdcreate [run] {magenta}(flags){reset}"),
-                format!("  {magenta}--arg_count{reset}             Displays number of arguments supplied"),
-                format!("  {magenta}--force_system_shell{reset}    Forces system shell to be used when running commands"),
-                format!("  {magenta}--offline{reset}               Run certain commands/arguments offline"),
+                format!("Usage: cmdcreate {magenta}(flags){reset} [run] {magenta}(flags){reset}"),
+                format!("  {magenta}-a{reset},{magenta} --arg_count{reset}             Displays number of arguments supplied"),
+                format!("  {magenta}-F{reset},{magenta} --force_system_shell{reset}    Forces system shell to be used when running commands"),
+                format!("  {magenta}-o{reset},{magenta} --offline{reset}               Run certain commands/arguments offline"),
+                format!("  {magenta}-f{reset},{magenta} --force{reset}                 Skips confirmation for an action"),
             ];
 
             for line in lines {
