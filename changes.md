@@ -139,3 +139,9 @@
 - Bug fix
     - Fixed when upgrader retrieves wrong file name string.
 - Code optimizations
+
+## v0.6.5
+- Code optimizations
+- `--force`/`-f` flag: Skips confirmation for an action
+- Typos and bug fixes
+- Improved debugging menu
