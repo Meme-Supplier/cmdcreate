@@ -1,4 +1,4 @@
-yay -Rns cmdcreate --noconfirm || clear; echo -e "\nRelease ver not installed, skipping\n"
+sudo pacman -Rns cmdcreate --noconfirm || clear; echo -e "\nRelease ver not installed, skipping\n"
 sudo rm -f /usr/bin/cmdcreate
 cargo update
 rustup update
