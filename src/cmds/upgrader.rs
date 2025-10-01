@@ -33,7 +33,7 @@ pub fn upgrade() {
     ask_for_confirmation("Do you want to upgrade cmdcreate?");
 
     println!(
-        "\nSelect an upgrade method:\n\n{blue}1]{reset} Upgrade through AUR\n{blue}2]P{reset} Install via .deb file\n{blue}3]{reset} Manually install raw binary"
+        "\nSelect an upgrade method:\n\n{blue}1]{reset} Upgrade through AUR\n{blue}2]{reset} Install via .deb file\n{blue}3]{reset} Manually install raw binary"
     );
 
     let mut method = String::new();
@@ -67,8 +67,8 @@ pub fn upgrade() {
             };
 
             let file_to_download = format!("cmdcreate-{latest_release}-linux-bin");
-
             let client = Client::new();
+
             let release: Release = client.get(format!("https://api.github.com/repos/{owner}/{repo}/releases/latest"))
                 .header("User-Agent", "reqwest")
                 .send()
