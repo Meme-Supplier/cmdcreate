@@ -7,29 +7,29 @@ Cmdcreate will usually get smaller, more frequent updates than larger less frequ
 
 ```
 Commands:
-  create <name> <contents>     Create a custom command
-  remove <name>                Remove a custom command
-  edit <name>                  Modify a custom command
-  list                         Display custom commands
-  search <command>             Searches for matched command
-  reset                        Removes all installed commands
-  display <command>            Display contents of a command
-  rename <command> <new name>  Renames a command
+  create <name> <contents>         Create a custom command
+  remove <name>                    Remove a custom command
+  edit <name>                      Modify a custom command
+  list                             Display custom commands
+  search <command>                 Searches for matched command
+  reset                            Removes all installed commands
+  display <command>                Display contents of a command
+  rename <command> <new name>      Renames a command
 
  Update:
-    check                      Checks for updates
-    update                     Updates your system
+    check                          Checks for updates
+    update                         Updates your system
 
 Flags:
-  --version                    Displays version
-  --supported_editors          Displays supported text editors
-  --changelog                  Displays changelog
-  --license                    Displays license
-  --debugging                  Displays flags used for debugging
+  --version                        Displays version
+  --supported_editors              Displays supported text editors
+  --changelog                      Displays changelog
+  --license                        Displays license
+  --debugging                      Displays flags used for debugging
 
   Offline:
-    --get_offline_files        Downloads files for offline use
-    --remove_offline_files     Removes files for offline use
+    --get_offline_files            Downloads files for offline use
+    --remove_offline_files         Removes files for offline use
 ```
 
 # Installation
