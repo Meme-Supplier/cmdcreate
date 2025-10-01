@@ -5,7 +5,7 @@ use std::{env, fs};
 
 use crate::cmds::upgrader::upgrade;
 
-pub static PROJ_VER: &str = "v0.6.4";
+pub static PROJ_VER: &str = "v0.6.5";
 
 pub const SUPPORTED_EDITORS: [&str; 13] = [
     "nvim",
@@ -75,7 +75,7 @@ pub fn is_command_installed(cmd: &str) {
         }
     }
 
-    if count == 0 {
+    if count == 0 && !(args_contains("-f") || args_contains("--force")) {
         error("Command not installed: ", cmd);
         exit(0)
     }
@@ -101,7 +101,7 @@ pub fn run_shell_command<F>(cmd: &str, fallback: F)
 where
     F: FnOnce(),
 {
-    let shell: String = if args_contains("--force_system_shell") {
+    let shell: String = if args_contains("--force_system_shell") | args_contains("-F") {
         get_shell()
     } else {
         "bash".to_string()
@@ -181,12 +181,14 @@ pub fn check_for_updates() {
 }
 
 pub fn ask_for_confirmation(q: &str) {
-    println!("{q}\n(Y or N)");
-    let mut confirm = String::new();
-    std::io::stdin().read_line(&mut confirm).unwrap();
-    if confirm.trim().to_lowercase() != "y" {
-        println!("{}\nAborted.{}", COLORS.red, COLORS.reset);
-        exit(0);
+    if !args_contains("--force") && !args_contains("-f") {
+        println!("{q}\n(Y or N)");
+        let mut confirm = String::new();
+        std::io::stdin().read_line(&mut confirm).unwrap();
+        if confirm.trim().to_lowercase() != "y" {
+            println!("{}\nAborted.{}", COLORS.red, COLORS.reset);
+            exit(0);
+        }
     }
 }
 
