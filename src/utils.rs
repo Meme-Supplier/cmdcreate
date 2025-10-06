@@ -5,7 +5,7 @@ use std::{env, fs};
 
 use crate::cmds::upgrader::upgrade;
 
-pub static PROJ_VER: &str = "v0.6.5";
+pub static PROJ_VER: &str = "v0.6.6";
 
 pub const SUPPORTED_EDITORS: [&str; 13] = [
     "nvim",
@@ -76,7 +76,7 @@ pub fn is_command_installed(cmd: &str) {
     }
 
     if count == 0 && !(args_contains("-f") || args_contains("--force")) {
-        error("Command not installed: ", cmd);
+        error("Command not installed:", cmd);
         exit(0)
     }
 }
@@ -193,7 +193,8 @@ pub fn ask_for_confirmation(q: &str) {
 }
 
 pub fn error(msg: &str, err: &str) {
-    eprintln!("{}Error: {msg} {err}{}", COLORS.red, COLORS.reset)
+    eprintln!("{}Error: {} {err}{}", COLORS.red, msg.trim(), COLORS.reset);
+    exit(1)
 }
 
 pub fn is_editor_installed(editor: &str) -> bool {
@@ -208,7 +209,7 @@ pub fn read_file_to_string(file_path: &str) -> String {
     match fs::read_to_string(file_path) {
         Ok(contents) => contents,
         Err(e) => {
-            error("Error reading file: ", &format!("\"{file_path}\": {e}"));
+            error("Error reading file:", &format!("\"{file_path}\": {e}"));
             String::new()
         }
     }
