@@ -145,3 +145,10 @@
 - `--force`/`-f` flag: Skips confirmation for an action
 - Typos and bug fixes
 - Improved debugging menu
+
+## v0.6.6
+- Typo fix
+- Bug fixes
+- When upgrading through the AUR, you now have to options:
+    - Use AUR manager (Yay and Paru only)
+    - Clone repository
