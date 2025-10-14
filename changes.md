@@ -152,3 +152,6 @@
 - When upgrading through the AUR, you now have to options:
     - Use AUR manager (Yay and Paru only)
     - Clone repository
+
+## v0.6.7
+- Heavy code optimizations
