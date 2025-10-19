@@ -4,4 +4,5 @@ rustup update
 cargo update
 ./format.sh
 cargo build --release
+cargo clippy
 sudo cp ./target/release/cmdcreate /usr/bin
