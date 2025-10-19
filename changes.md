@@ -155,3 +155,7 @@
 
 ## v0.6.7
 - Heavy code optimizations
+
+## V0.6.8
+- Code optimizations
+- File structure overhaul
