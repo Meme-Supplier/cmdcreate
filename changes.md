@@ -159,3 +159,12 @@
 ## V0.6.8
 - Code optimizations
 - File structure overhaul
+
+## v0.6.9
+- Fixed the broken update checking
+- Code optimizations
+- You can now install/update cmdcreate through a `.rpm` file
+- Fedora system support
+- Removed `reset` command
+- Removed `--arg_count`/`a` and `--offline`/`-o` flags
+- Bug fixes
