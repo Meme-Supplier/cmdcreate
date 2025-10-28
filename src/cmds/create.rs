@@ -1,6 +1,6 @@
 use crate::utils::{
     colors::COLORS,
-    msgs::error,
+    fs::create_file,
     sys::{return_args, run_shell_command, VARS},
 };
 
@@ -16,17 +16,16 @@ pub fn create() {
 
     let script = &format!("{}/.local/share/cmdcreate/files/{name}", VARS.home);
 
+    create_file(script);
+
     std::fs::write(script, contents).expect("Failed to write contents.");
 
-    run_shell_command(
-        &format!(
-            "
+    run_shell_command(&format!(
+        "
             chmod +x {script}; \
             sudo ln -sf {script} /usr/bin/{name}
             ",
-        ),
-        || error("Failed to create command:", name),
-    );
+    ));
 
     println!("\n{green}Success! Created command: {blue}\"{name}\"{reset}",);
 }
