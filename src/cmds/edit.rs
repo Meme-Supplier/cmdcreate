@@ -66,7 +66,5 @@ pub fn edit() {
         )
     }
 
-    run_shell_command(&format!("sudo {editor} {}", file_path.display()), || {
-        error("Failed to edit command:", args.get(1).unwrap())
-    })
+    run_shell_command(&format!("sudo {editor} {}", file_path.display()))
 }
