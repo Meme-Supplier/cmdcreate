@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, path::Path};
 
 use crate::utils::msgs::error;
 
@@ -10,6 +10,27 @@ pub fn read_file_to_string(file_path: &str) -> String {
             String::new()
         }
     }
+}
+
+// Not used right now
+pub fn _folder_exists(path: &str) -> bool {
+    Path::new(path).is_dir()
+}
+
+// Not used right now
+pub fn _create_folder(path: &str) {
+    match fs::create_dir_all(path) {
+        Ok(_) => {}
+        Err(e) => error(&format!("Failed to create folder: {path}"), &e.to_string()),
+    }
+}
+
+pub fn create_file(path: &str) {
+    if let Some(parent) = Path::new(path).parent() {
+        let _ = fs::create_dir_all(parent);
+    }
+
+    let _ = fs::File::create(path);
 }
 
 pub fn delete_file(path: &str) {
