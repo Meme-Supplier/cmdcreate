@@ -18,17 +18,16 @@ pub static VARS: Lazy<Vars> = Lazy::new(|| Vars {
 });
 
 pub fn return_args() -> Vec<String> {
-    env::args().skip(1).collect()
+    env::args()
+        .skip(1) // skip program name
+        .collect()
 }
 
 pub fn args_contains(s: &str) -> bool {
     return_args().contains(&s.to_string())
 }
 
-pub fn run_shell_command<F>(cmd: &str, fallback: F)
-where
-    F: FnOnce(),
-{
+pub fn run_shell_command(cmd: &str) {
     let shell: String = if args_contains("--force_system_shell") | args_contains("-F") {
         VARS.shell.clone()
     } else {
@@ -47,14 +46,9 @@ where
         .stderr(Stdio::inherit())
         .status()
     {
-        Ok(status) => {
-            if !status.success() {
-                fallback()
-            }
-        }
+        Ok(_) => {}
         Err(e) => {
             error("", &e.to_string());
-            fallback()
         }
     }
 }
