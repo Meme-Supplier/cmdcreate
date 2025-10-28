@@ -1,14 +1,13 @@
+use std::{error::Error, fs::File};
+
 use reqwest::blocking::Client;
 use serde::Deserialize;
 use serde_json::Value;
-use std::fs::File;
-use std::process::Command;
 
-use crate::utils::colors::COLORS;
-use crate::utils::fs::delete_folder;
-use crate::utils::msgs::{ask_for_confirmation, error};
-use crate::utils::sys::{run_shell_command, VARS};
-use crate::PROJ_VER;
+use crate::{
+    utils::{colors::*, fs::*, msgs::*, sys::*},
+    PROJ_VER,
+};
 
 #[derive(Deserialize)]
 struct Release {
@@ -25,12 +24,12 @@ struct Asset {
 pub fn upgrade() {
     let (blue, red, yellow, reset) = (COLORS.blue, COLORS.red, COLORS.yellow, COLORS.reset);
 
-    let latest_release = get_latest_release();
+    let latest_release = get_latest_release().unwrap().to_string();
 
     ask_for_confirmation("Do you want to upgrade cmdcreate?");
 
     println!(
-        "\nSelect an upgrade method:\n\n{blue}1]{reset} Upgrade through AUR\n{blue}2]{reset} Install via .deb file\n{blue}3]{reset} Manually install raw binary"
+        "\nSelect an upgrade method:\n\n{blue}1]{reset} Upgrade through AUR\n{blue}2]{reset} Install via .deb file\n{blue}4]{reset} Manually install binary"
     );
 
     let mut method = String::new();
@@ -55,7 +54,7 @@ pub fn upgrade() {
                     std::io::stdin().read_line(&mut method).unwrap();
 
                     match method.trim() {
-                        "1" | "2" => run_shell_command(&format!("{method} -Syyu"), || {}),
+                        "1" | "2" => run_shell_command(&format!("{method} -Syyu")),
                         _ => error("Invalid selection.", ""),
                     }
                 }
@@ -65,7 +64,7 @@ pub fn upgrade() {
                             sudo rm /usr/bin/cmdcreate; \
                             git clone --branch cmdcreate --single-branch https://github.com/archlinux/aur.git cmdcreate; \
                             cd ~/cmdcreate; \
-                            makepkg -si", || error("Failed installing package.",""));
+                            makepkg -si");
                     delete_folder(&format!("{}/cmdcreate", VARS.home));
                 }
 
@@ -81,13 +80,23 @@ pub fn upgrade() {
                     curl -L -o /tmp/cmdcreate-{latest_release}-linux-x86_64.deb https://github.com/Meme-Supplier/cmdcreate/releases/latest/download/cmdcreate-{latest_release}-linux-x86_64.deb; \
                     sudo dpkg -i /tmp/cmdcreate-{latest_release}-linux-x86_64.deb;
                     "
-                ), || error("Failed to install latest Debian package.", ""));
+                ));
         }
         "3" => {
+            println!("Downloading latest RPM package...");
+
+            run_shell_command(
+                &format!(
+                    "
+                    curl -L -o /tmp/cmdcreate-{latest_release}-linux-x86_64.rpm https://github.com/Meme-Supplier/cmdcreate/releases/latest/download/cmdcreate-{latest_release}-linux-x86_64.rpm; \
+                    sudo dpkg -i /tmp/cmdcreate-{latest_release}-linux-x86_64.rpm;
+                    "
+                ));
+        }
+        "4" => {
             println!("Downloading latest binary...");
 
             let (owner, repo) = ("Meme-Supplier", "cmdcreate");
-            let latest_release = get_latest_release();
             let file_to_download = format!("cmdcreate-{latest_release}-linux-bin");
             let client = Client::new();
 
@@ -106,31 +115,29 @@ pub fn upgrade() {
                 .into_iter()
                 .find(|a| a.name == file_to_download)
             {
-                let tmp_path = format!("/tmp/{}", asset.name);
-                let mut tmp_file = File::create(&tmp_path).unwrap();
+                let tmp_path = &format!("/tmp/{}", asset.name);
+                let mut tmp_file = File::create(tmp_path).unwrap();
+                let out_path = &format!("/usr/bin/{}", asset.name);
+
                 std::io::copy(
                     &mut client.get(&asset.browser_download_url).send().unwrap(),
                     &mut tmp_file,
                 )
                 .unwrap();
 
-                let out_path = format!("/usr/bin/{}", asset.name);
-                Command::new("sudo")
-                    .args(["mv", &tmp_path, &out_path])
-                    .status()
-                    .unwrap();
-
-                Command::new("sudo")
-                    .args(["chmod", "+x", &out_path])
-                    .status()
-                    .unwrap();
-
-                run_shell_command(&format!("sudo rm /usr/bin/cmdcreate; sudo mv /usr/bin/{file_to_download} /usr/bin/cmdcreate"), || {});
+                run_shell_command(&format!(
+                    "
+                        sudo mv +x {tmp_path} {out_path}; \
+                        sudo chmod +x {out_path}; \
+                        sudo rm /usr/bin/cmdcreate; \
+                        sudo mv /usr/bin/{file_to_download} /usr/bin/cmdcreate
+                        ",
+                ));
 
                 println!(
                     "Downloaded {} from release {}",
                     asset.name, release.tag_name
-                );
+                )
             } else {
                 error("Binary not found in latest release.", "");
             }
@@ -139,35 +146,41 @@ pub fn upgrade() {
     }
 }
 
-pub fn get_latest_tag(owner: &str, repo: &str) -> Result<String, Box<dyn std::error::Error>> {
-    let json: Value = reqwest::blocking::Client::new()
+pub fn get_latest_tag(owner: &str, repo: &str) -> Result<String, Box<dyn Error>> {
+    let res = reqwest::blocking::Client::new()
         .get(format!(
             "https://api.github.com/repos/{owner}/{repo}/releases/latest"
         ))
         .header("User-Agent", "rust-client")
-        .send()?
-        .json()?;
+        .send()?;
 
-    Ok(json["tag_name"]
+    let json: Value = res.json()?;
+    let tag = json["tag_name"]
         .as_str()
-        .ok_or("Missing tag_name")?
-        .to_string())
+        .ok_or("Missing tag_name in response")?
+        .to_string();
+
+    Ok(tag)
 }
 
-pub fn get_latest_release() -> String {
-    get_latest_tag("Meme-Supplier", "cmdcreate")
-        .unwrap()
-        .to_string()
+pub fn get_latest_release() -> Option<String> {
+    get_latest_tag("Meme-Supplier", "cmdcreate").ok()
 }
 
 pub fn check_for_updates() {
     println!("\nChecking for updates...");
-    let latest_release = get_latest_release();
-    if PROJ_VER != latest_release {
-        println!(
-            "{}Update available: {PROJ_VER} -> {latest_release}{}",
-            COLORS.green, COLORS.reset
-        );
-        upgrade();
+    match get_latest_release() {
+        Some(latest) if latest != PROJ_VER => {
+            println!(
+                "{}Update available: {PROJ_VER} -> {latest}{}",
+                COLORS.green, COLORS.reset
+            );
+            upgrade();
+        }
+        Some(_) => println!("Already up to date."),
+        None => println!(
+            "{}Failed to fetch the latest release.{}",
+            COLORS.red, COLORS.reset
+        ),
     }
 }
