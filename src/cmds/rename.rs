@@ -38,16 +38,13 @@ pub fn rename() {
         error("Command doesn't exist:", name);
     }
 
-    run_shell_command(
-        &format!(
-            "
+    run_shell_command(&format!(
+        "
             mv ~/.local/share/cmdcreate/files/{name} ~/.local/share/cmdcreate/files/{new}; \
             sudo mv /usr/bin/{name} /usr/bin/{new}; \
             sudo ln -sf ~/.local/share/cmdcreate/files/{new} /usr/bin/{new}; \
             "
-        ),
-        || error("Failed to rename command:", name),
-    );
+    ));
 
     println!("{green}Created command {blue}\"{new}\"{reset}")
 }
