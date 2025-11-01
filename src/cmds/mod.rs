@@ -7,3 +7,5 @@ pub mod rename;
 pub mod search;
 mod tools;
 pub mod upgrader;
+
+pub mod backup;
