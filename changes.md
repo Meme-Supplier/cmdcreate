@@ -168,3 +168,13 @@
 - Removed `reset` command
 - Removed `--arg_count`/`a` and `--offline`/`-o` flags
 - Bug fixes
+
+## v0.7.0
+- Fixed bugs
+    - Slow startup
+    - Fixed commands not deleting
+- Code optimizations
+- You can now `import`/`export` commands
+    - Added commands
+        - `import <file input>`
+        - `export <output directory>`
