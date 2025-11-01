@@ -3,8 +3,8 @@
 set -e
 
 if [[ -z "$1" ]]; then
-  echo "Provide cmdcreate's version (MUST NOT START WITH v)"
-  exit 1
+	echo "Provide cmdcreate's version (MUST NOT START WITH v)"
+	exit 1
 fi
 
 VERSION="$1"
@@ -12,13 +12,13 @@ PKGDIR="cmdcreate-${VERSION}-linux-x86_64-deb"
 BINARY_SRC="$HOME/Downloads/cmdcreate-${VERSION}-linux-x86_64-bin"
 
 if [[ ! -f "$BINARY_SRC" ]]; then
-  echo "Binary $BINARY_SRC not found. Build it first."
-  exit 1
+	echo "Binary $BINARY_SRC not found. Build it first."
+	exit 1
 fi
 
 mkdir -p "$PKGDIR/DEBIAN" "$PKGDIR/usr/bin"
 
-cat > "$PKGDIR/DEBIAN/control" <<EOF
+cat >"$PKGDIR/DEBIAN/control" <<EOF
 Package: cmdcreate
 Version: $VERSION
 Section: utils
@@ -46,7 +46,7 @@ rm -r "$PKGDIR"
 
 mv "$BINARY_SRC" "$HOME/Downloads/cmdcreate-v${VERSION}-linux-x86_64-bin"
 
-cd /home/meme/Documents/Code/Projects/cmdcreate/package
+cd /home/owen/Documents/Code/Projects/cmdcreate/package
 rm cmdcreate*
 
 echo -e "\nBuilt and moved $FINAL_DEB to ~/Downloads"
