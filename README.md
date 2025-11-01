@@ -1,4 +1,4 @@
-# cmdcreate v0.6.9
+# cmdcreate v0.7.0
 Cmdcreate allows you to create custom commands for your Linux Terminal without needing to enter the same "complex" commands over and over (unless if your are lazy like me).
 
 Cmdcreate will usually get smaller, more frequent updates than larger less frequent updates. You should update Cmdcreate often to stay up to date.
@@ -19,6 +19,10 @@ Commands:
  Update:
     check                          Checks for updates
     update                         Updates your system
+
+ Update:
+    export <output directory>      Checks for updates
+    import <file input>            Updates your system
 
 Flags:
   -v, --version                    Displays version
