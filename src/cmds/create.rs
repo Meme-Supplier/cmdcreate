@@ -1,6 +1,6 @@
 use crate::utils::{
     colors::COLORS,
-    fs::create_file,
+    fs::write_to_file,
     sys::{return_args, run_shell_command, VARS},
 };
 
@@ -16,9 +16,7 @@ pub fn create() {
 
     let script = &format!("{}/.local/share/cmdcreate/files/{name}", VARS.home);
 
-    create_file(script);
-
-    std::fs::write(script, contents).expect("Failed to write contents.");
+    write_to_file(script, contents);
 
     run_shell_command(&format!(
         "
