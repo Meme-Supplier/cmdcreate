@@ -59,6 +59,6 @@ RPM_FILE=$(find "$RPMBUILD_DIR/RPMS/x86_64" -name "cmdcreate-${VERSION}-*.rpm" |
 FINAL_RPM="$HOME/Downloads/cmdcreate-v${VERSION}-linux-x86_64.rpm"
 cp "$RPM_FILE" "$FINAL_RPM"
 
-rm -r /home/meme/rpmbuild
+rm -r ~/rpmbuild
 
 echo -e "\nBuilt and moved $FINAL_RPM to ~/Downloads"
