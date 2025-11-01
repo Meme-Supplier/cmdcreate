@@ -2,11 +2,16 @@ mod cmds;
 mod utils;
 
 use crate::{
-    cmds::{edit::*, upgrader::*, *},
+    cmds::{
+        backup::{export, import},
+        edit::*,
+        upgrader::*,
+        *,
+    },
     utils::{colors::*, fs::*, msgs::*, sys::*},
 };
 
-pub static PROJ_VER: &str = "v0.6.9";
+pub static PROJ_VER: &str = "v0.7.0";
 
 fn init_files() {
     run_shell_command(
@@ -22,11 +27,21 @@ fn main() {
 
     let args = return_args();
     if args.is_empty() {
-        utils::usage::display_usage();
+        utils::msgs::display_usage();
         return;
     }
 
-    init_files();
+    if
+    // License
+    args[0].starts_with("-l")
+        || args[0].starts_with("--l")
+
+        // Changelog
+        || args[0].starts_with("-c")
+        || args[0].starts_with("--c")
+    {
+        init_files();
+    }
 
     match args[0].as_str() {
         "create" => create::create(),
@@ -36,8 +51,12 @@ fn main() {
         "search" => search::search(),
         "display" => display::display(),
         "rename" => rename::rename(),
+
         "check" => check_for_updates(),
         "update" => upgrader::upgrade(),
+
+        "import" => import::import(),
+        "export" => export::export(),
 
         // Arguments
         "--version" | "-v" => {
@@ -84,7 +103,6 @@ fn main() {
             let lines: Vec<String> = vec![
                 format!("Usage: cmdcreate {magenta}(flags){reset} [run] {magenta}(flags){reset}"),
                 format!("  {magenta}-F{reset},{magenta} --force_system_shell{reset}    Forces system shell to be used when running commands"),
-                format!("  {magenta}-o{reset},{magenta} --offline{reset}               Run certain commands/arguments offline"),
                 format!("  {magenta}-f{reset},{magenta} --force{reset}                 Skips confirmation for an action")
             ];
 
