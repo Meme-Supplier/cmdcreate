@@ -1,4 +1,8 @@
-use std::{fs, path::Path};
+use std::{
+    fs::{self, File},
+    io::Write,
+    path::Path,
+};
 
 use crate::utils::msgs::error;
 
@@ -12,12 +16,18 @@ pub fn read_file_to_string(file_path: &str) -> String {
     }
 }
 
+pub fn write_to_file(path: &str, contents: &str) {
+    let mut file = File::create(path).expect("Failed to create the file");
+
+    file.write_all(contents.as_bytes())
+        .expect("Failed to write to file");
+}
+
 // Not used right now
 pub fn _folder_exists(path: &str) -> bool {
     Path::new(path).is_dir()
 }
 
-// Not used right now
 pub fn _create_folder(path: &str) {
     match fs::create_dir_all(path) {
         Ok(_) => {}
@@ -25,7 +35,7 @@ pub fn _create_folder(path: &str) {
     }
 }
 
-pub fn create_file(path: &str) {
+pub fn _create_file(path: &str) {
     if let Some(parent) = Path::new(path).parent() {
         let _ = fs::create_dir_all(parent);
     }
