@@ -81,7 +81,7 @@
 
 ## v0.5.3
 - Fixed bug where cmdcreate would allow you to delete a command that doesn't exist (For real this time)
-- Fixed bug where you would have insufficent write access to commands.
+- Fixed bug where you would have insufficient write access to commands.
 
 ## v0.5.4
 - New commands:
@@ -106,7 +106,6 @@
 - Code optimizations
 - Added `kwrite` as a supported editor
 - `display` command: Displays the contents of a command
-    - Usage: c
 - Overhaul to the intro
 
 ## v0.5.9
@@ -178,3 +177,9 @@
     - Added commands
         - `import <file input>`
         - `export <output directory>`
+
+## v0.7.1
+- Fixed commands not deleting again
+- Code optimizations
+- Fixed typos
+- Added proper documentation/code comments to files
