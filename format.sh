@@ -1,9 +1,28 @@
-cd ./src
-echo Formatting main...
+#!/usr/bin/env bash
+# format_src.sh - Format all Rust source files in cmdcreate
+#
+# This script uses `rustfmt` to format all Rust files in the `src` directory,
+# including main.rs, command modules, backup modules, and utility modules.
+# Run this before building or committing to ensure consistent code style.
+
+set -e  # Exit immediately on any error
+
+# Enter the source directory
+cd ./src || { echo "Failed to enter ./src directory"; exit 1; }
+
+# Format the main file
+echo "Formatting main..."
 rustfmt main.rs
-echo Formatting commands...
-rustfmt ./cmds/*
-rustfmt ./cmds/backup/*
-echo Formatting utils...
-rustfmt ./utils/*
-echo Done
+
+# Format core command modules
+echo "Formatting commands..."
+rustfmt ./cmds/*.rs
+
+# Format backup submodules
+rustfmt ./cmds/backup/*.rs
+
+# Format utility modules
+echo "Formatting utils..."
+rustfmt ./utils/*.rs
+
+echo "Done formatting all source files."
