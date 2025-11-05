@@ -1,4 +1,4 @@
-# cmdcreate v0.7.1
+# cmdcreate v0.7.2
 Cmdcreate allows you to create custom commands for your Linux terminal without needing to enter the same "complex" commands over and over (unless if your are lazy like me).
 
 Cmdcreate will usually get smaller, more frequent updates than larger less frequent updates. You should update Cmdcreate often to stay up to date.
@@ -7,33 +7,34 @@ Cmdcreate will usually get smaller, more frequent updates than larger less frequ
 
 ```
 Commands:
-  create  <name>    <contents>     Create a custom command
-  remove  <name>                   Remove a custom command
-  edit    <name>                   Modify a custom command
-  list                             Display custom commands
-  search  <command>                Searches for matched command
-  reset                            Removes all installed commands
-  display <command>                Display contents of a command
-  rename  <command> <new name>     Renames a command
+  create   <command>     <contents> Create a custom command
+  remove   <command>                Remove a custom command
+  edit     <command>                Modify a custom command
+  list                              Display custom commands
+  search   <command>                Searches for matched command
+  reset                             Removes all installed commands
+  display  <command>                Display contents of a command
+  rename   <command>    <new name>  Renames a command
+  favorite <add/remove> <command>   Renames a command
 
  Update:
-    check                          Checks for updates
-    update                         Updates your system
+    check                           Checks for updates
+    update                          Updates your system
 
  Update:
-    export <output directory>      Checks for updates
-    import <file input>            Updates your system
+    export <output directory>       Checks for updates
+    import <file input>             Updates your system
 
 Flags:
-  -v, --version                    Displays version
-  -s, --supported_editors          Displays supported text editors
-  -c, --changelog                  Displays changelog
-  -l, --license                    Displays license
-  -d, --debugging                  Displays flags used for debugging
+  -v, --version                     Displays version
+  -s, --supported_editors           Displays supported text editors
+  -c, --changelog                   Displays changelog
+  -l, --license                     Displays license
+  -d, --debugging                   Displays flags used for debugging
 
   Offline:
-    -g, --get_offline_files        Downloads files for offline use
-    -r, --remove_offline_fil       Removes files for offline use
+    -g, --get_offline_files         Downloads files for offline use
+    -r, --remove_offline_fil        Removes files for offline use
 ```
 
 # Installation
