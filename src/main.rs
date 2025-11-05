@@ -24,7 +24,7 @@ use crate::{
 };
 
 /// Current version of the project
-pub static PROJ_VER: &str = "v0.7.1";
+pub static PROJ_VER: &str = "v0.7.2";
 
 /// Downloads the LICENSE and changes.md files from the repository
 /// These files are stored locally for offline access
@@ -67,13 +67,14 @@ fn main() {
     // Match the first argument to determine which operation to perform
     match args[0].as_str() {
         // Command Management Operations
-        "create" => create::create(),    // Create a new command
-        "remove" => remove::remove(),    // Remove an existing command
-        "edit" => edit::edit(),          // Edit an existing command
-        "list" => list::list(),          // List all available commands
-        "search" => search::search(),    // Search for specific commands
-        "display" => display::display(), // Display details of a command
-        "rename" => rename::rename(),    // Rename an existing command
+        "create" => create::create(),       // Create a new command
+        "remove" => remove::remove(),       // Remove an existing command
+        "edit" => edit::edit(),             // Edit an existing command
+        "list" => list::list(),             // List all available commands
+        "search" => search::search(),       // Search for specific commands
+        "display" => display::display(),    // Display details of a command
+        "rename" => rename::rename(),       // Rename an existing command
+        "favorite" => favorite::favorite(), // Add command to favorites
 
         // System Operations
         "check" => check_for_updates(), // Check for available updates
