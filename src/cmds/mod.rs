@@ -27,6 +27,7 @@
 pub mod create; // Command creation functionality
 pub mod display; // Command content display
 pub mod edit; // Command editing operations
+pub mod favorite; // Favorite command management
 pub mod list; // Command listing utility
 pub mod remove; // Command removal functionality
 pub mod rename; // Command renaming operations
