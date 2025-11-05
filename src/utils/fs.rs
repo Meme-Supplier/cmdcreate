@@ -45,17 +45,33 @@ pub fn write_to_file(path: &str, contents: &str) {
         .expect("Failed to write to file");
 }
 
-/// Checks if a folder exists at the given path
+/// Removes text from a file, overwriting any existing contents
 ///
 /// # Arguments
-/// * `path` - Folder path
+/// * `path` - Path to the file
+/// * `contents` - String data to remove
+pub fn remove_from_file(path: &str, contents: &str) {
+    // Read the current contents of the file
+    let current_contents = read_file_to_string(path);
+
+    // Remove the specified contents
+    let new_contents = current_contents.replace(contents, "");
+
+    // Write the updated contents back to the file
+    write_to_file(path, &new_contents);
+}
+
+/// Checks if a file/folder path exists at the given path
+///
+/// # Arguments
+/// * `path` - File/folder path
 ///
 /// # Returns
 /// * `bool` - true if folder exists, false otherwise
 ///
 /// # Note
 /// Currently not used in cmdcreate
-pub fn _folder_exists(path: &str) -> bool {
+pub fn _path_exists(path: &str) -> bool {
     Path::new(path).is_dir()
 }
 
@@ -66,7 +82,10 @@ pub fn _folder_exists(path: &str) -> bool {
 pub fn _create_folder(path: &str) {
     match fs::create_dir_all(path) {
         Ok(_) => {} // Folder created successfully
-        Err(e) => error(&format!("Failed to create folder: {path}"), &e.to_string()),
+        Err(e) => error(
+            &format!("Failed to create folder: \"{path}\":"),
+            &e.to_string(),
+        ),
     }
 }
 
@@ -76,7 +95,7 @@ pub fn _create_folder(path: &str) {
 ///
 /// # Arguments
 /// * `path` - File path to create
-pub fn _create_file(path: &str) {
+pub fn create_file(path: &str) {
     // Ensure parent directories exist
     if let Some(parent) = Path::new(path).parent() {
         let _ = fs::create_dir_all(parent);
