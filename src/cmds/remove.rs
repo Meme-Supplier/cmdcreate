@@ -6,10 +6,10 @@
 use crate::{
     cmds::tools::{is_command_installed, retrieve_commands}, // Command validation tools
     utils::{
-        colors::COLORS,                              // Terminal color formatting
-        fs::delete_file,                             // File system operations
-        msgs::ask_for_confirmation,                  // User interaction
-        sys::{return_args, run_shell_command, VARS}, // System operations and variables
+        colors::COLORS,                                           // Terminal color formatting
+        fs::{delete_file, read_file_to_string, remove_from_file}, // File system operations
+        msgs::ask_for_confirmation,                               // User interaction
+        sys::{return_args, run_shell_command, VARS},              // System operations and variables
     },
 };
 
@@ -62,6 +62,12 @@ pub fn remove() {
         "{}/.local/share/cmdcreate/files/{name}",
         VARS.home
     ));
+
+    // Remove the command from the list of favorites
+    let path = format!("{}/.local/share/cmdcreate/favorites", VARS.home);
+    if read_file_to_string(&path).contains(name) {
+        remove_from_file(&path, name);
+    }
 
     // Remove the system-wide command symlink
     run_shell_command(&format!("sudo rm -f /usr/bin/{name}"));
