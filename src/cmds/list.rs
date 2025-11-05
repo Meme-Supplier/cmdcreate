@@ -5,7 +5,7 @@
 /// that have been created using cmdcreate.
 use crate::{
     cmds::tools::retrieve_commands, // Command retrieval utility
-    utils::colors::COLORS,          // Terminal color formatting
+    utils::{colors::COLORS, fs::read_file_to_string, sys::VARS}, // Terminal color formatting
 };
 
 /// Lists all installed commands in the system
@@ -19,6 +19,11 @@ use crate::{
 /// ```bash
 /// cmdcreate list
 /// ```
+///
+/// # Implementation Details
+/// - Uses the `retrieve_commands` function to get a list of installed commands
+/// - Formats the output using terminal color codes
+/// - Marks favorite commands with a star (★)
 pub fn list() {
     // Initialize color codes for terminal output formatting
     let (blue, reset) = (COLORS.blue, COLORS.reset);
@@ -37,9 +42,22 @@ pub fn list() {
 
     // Print each command name, extracting just the filename without path
     for script in installed_scripts {
-        println!(
-            "{}",
-            script.file_stem().unwrap_or_default().to_string_lossy()
-        )
+        let name = script.file_stem().unwrap_or_default().to_string_lossy();
+        let favorites =
+            read_file_to_string(&format!("{}/.local/share/cmdcreate/favorites", VARS.home));
+
+        // Check if command is marked as favorite
+        if favorites.contains(name.to_string().as_str()) {
+            // Prepend star to favorite command names
+            println!("★ {name}");
+            continue;
+        }
+
+        // Deal with normal command formatting
+        if !favorites.is_empty() {
+            println!("  {name}");
+        } else {
+            println!("{name}");
+        }
     }
 }
