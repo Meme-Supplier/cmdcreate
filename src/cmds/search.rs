@@ -39,11 +39,6 @@ pub fn search() {
     if let Some(name) = args.get(1) {
         let installed_scripts = retrieve_commands("installed");
 
-        // Exit if no commands are installed
-        if installed_scripts.is_empty() {
-            return;
-        }
-
         // Search through installed commands and count matches
         let mut count: i32 = 0;
         for script in installed_scripts {
