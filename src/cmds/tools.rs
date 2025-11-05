@@ -3,7 +3,7 @@
 /// This module provides core functionality used across other command modules,
 /// including command validation, retrieval, and installation directory management.
 /// It serves as the foundation for command operations throughout cmdcreate.
-use std::{fs, path::PathBuf, process::exit};
+use std::{fs, path::PathBuf};
 
 use crate::utils::{
     colors::COLORS,     // Terminal color formatting
@@ -34,7 +34,6 @@ pub fn is_command_installed(cmd: &str) {
     // Exit if command not found and not in force mode
     if count == 0 && !(args_contains("-f") || args_contains("--force")) {
         error("Command not installed:", cmd);
-        exit(0)
     }
 }
 
@@ -91,7 +90,6 @@ pub fn retrieve_commands(val: &str) -> Vec<PathBuf> {
     // Handle case where no commands are installed
     if installed_scripts.is_empty() {
         error("No commands are installed.", "");
-        return Vec::new();
     }
 
     // Return either the list of installed commands or an empty vector
