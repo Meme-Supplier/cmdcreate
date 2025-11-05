@@ -234,9 +234,9 @@ pub fn check_for_updates() {
             upgrade();
         }
         Some(_) => println!("Already up to date."),
-        None => println!(
-            "{}Failed to fetch the latest release.{}",
-            COLORS.red, COLORS.reset
+        None => error(
+            "Failed to check for updates.\nMake sure you are connected to the internet.\n",
+            "",
         ),
     }
 }
