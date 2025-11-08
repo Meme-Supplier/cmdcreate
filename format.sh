@@ -10,7 +10,7 @@ set -e  # Exit immediately on any error
 # Enter the source directory
 cd ./src || { echo "Failed to enter ./src directory"; exit 1; }
 
-# Format the main file
+# Format main
 echo "Formatting main..."
 rustfmt main.rs
 
