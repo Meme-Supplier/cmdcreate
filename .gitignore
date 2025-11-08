@@ -1,4 +1,4 @@
-./Cargo.lock
-./.gitignore
-./.git/
-./target/
+Cargo.lock
+.gitignore
+.git/
+.target/
