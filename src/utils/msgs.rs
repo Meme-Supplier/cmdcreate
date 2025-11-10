@@ -57,9 +57,8 @@ pub fn display_usage() {
         "   Cmdcreate allows you to create custom commands for your Linux Terminal".into(),
         "   without needing to enter the same \"complex\" commands over and over".into(),
         "   (unless if your are lazy like me).".into(),
-        "\n   Cmdcreate will usually get smaller, more frequent updates than larger,".into(),
-        "   less frequent updates. You should update Cmdcreate often to stay up to".into(),
-        "   date.".into(),
+        "\n   Cmdcreate will no longer get feature updates, and will instead get".into(),
+        "   bug fixes only if necessary.".into(),
     ];
 
     // Print all lines to terminal
