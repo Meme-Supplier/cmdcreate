@@ -24,18 +24,7 @@ use crate::{
 };
 
 /// Current version of the project
-pub static PROJ_VER: &str = "v0.7.2";
-
-/// Downloads the LICENSE and changes.md files from the repository
-/// These files are stored locally for offline access
-fn init_files() {
-    run_shell_command(
-        "
-        curl -sSo ~/.local/share/cmdcreate/LICENSE https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE; \
-        curl -sSo ~/.local/share/cmdcreate/changes.md https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md
-        "
-    );
-}
+pub static PROJ_VER: &str = "v0.7.3";
 
 /// Main entry point for the cmdcreate application
 ///
@@ -56,12 +45,18 @@ fn main() {
         return;
     }
 
-    // Pre-download necessary files if user requests license or changelog
-    if args[0].starts_with("-l") || args[0].starts_with("--l") ||    // License request
-       args[0].starts_with("-c") || args[0].starts_with("--c")
-    // Changelog request
+    // Pre-download license or changelog files if requested
+    if args[0].starts_with("-l")
+        || args[0].starts_with("--l")
+        || args[0].starts_with("-c")
+        || args[0].starts_with("--c")
     {
-        init_files();
+        run_shell_command(
+            "
+            curl -sSo ~/.local/share/cmdcreate/LICENSE https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/LICENSE; \
+            curl -sSo ~/.local/share/cmdcreate/changes.md https://raw.githubusercontent.com/Meme-Supplier/cmdcreate/master/changes.md
+            "
+        );
     }
 
     // Match the first argument to determine which operation to perform
@@ -98,7 +93,6 @@ fn main() {
         "--get_offline_files" | "-g" => {
             // Download offline documentation files
             println!("Downloading offline files...");
-            init_files();
             println!("{green}Files downloaded successfully.{reset}");
         }
 
