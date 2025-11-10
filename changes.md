@@ -229,3 +229,8 @@
     - `add` Adds a command to favorites
     - `remove` Removes a command from favorites
   - Displays listed commands with an additional `★`
+
+## v0.7.3
+
+- Updated information about updates
+- Code optimizations
