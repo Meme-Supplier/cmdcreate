@@ -35,7 +35,7 @@ use crate::utils::{
 /// ```text
 /// command_name, command_contents
 /// ```
-pub fn import() {
+pub fn imp() {
     // Terminal color codes
     let (blue, yellow, green, reset) = (COLORS.blue, COLORS.yellow, COLORS.green, COLORS.reset);
     let args = return_args();
