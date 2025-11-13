@@ -1,4 +1,4 @@
-/// Module for terminal color formatting in cmdcreate
+/// Module for terminal color formatting
 ///
 /// This module provides ANSI escape codes for colored output in terminal
 /// environments. It includes a set of commonly used colors and a reset code
@@ -14,19 +14,12 @@
 /// - `magenta`: Used for flags and options
 /// - `cyan`: Used for auxiliary information
 pub struct Colors {
-    /// Reset terminal color to default
     pub reset: &'static str,
-    /// Red color - for errors and warnings
     pub red: &'static str,
-    /// Green color - for success messages
     pub green: &'static str,
-    /// Yellow color - for important values
     pub yellow: &'static str,
-    /// Blue color - for commands and actions
     pub blue: &'static str,
-    /// Magenta color - for flags and options
     pub magenta: &'static str,
-    /// Cyan color - for auxiliary information
     pub cyan: &'static str,
 }
 
@@ -38,18 +31,11 @@ pub struct Colors {
 /// println!("{}Error:{} {}", COLORS.red, COLORS.reset, "Something went wrong");
 /// ```
 pub const COLORS: Colors = Colors {
-    // ANSI escape code for resetting colors
     reset: "\x1b[0m",
-    // ANSI escape code for red text
     red: "\x1b[31m",
-    // ANSI escape code for green text
     green: "\x1b[32m",
-    // ANSI escape code for yellow text
     yellow: "\x1b[33m",
-    // ANSI escape code for blue text
     blue: "\x1b[34m",
-    // ANSI escape code for magenta text
     magenta: "\x1b[35m",
-    // ANSI escape code for cyan text
     cyan: "\x1b[36m",
 };
