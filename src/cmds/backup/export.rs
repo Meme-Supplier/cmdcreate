@@ -1,107 +1,85 @@
-/// Module for importing commands from backup files in cmdcreate
+/// Module for exporting installed commands in cmdcreate
 ///
-/// This module provides functionality to restore commands from a backup file
-/// created by the export function. It processes the backup file, recreates
-/// the commands in the system, and sets up proper permissions and symlinks.
+/// This module provides functionality to export all installed commands
+/// to a backup file. The export includes both command names and their
+/// contents, allowing for later restoration or transfer to another system.
 ///
-/// The import process expects files in the format:
-/// ```text
-/// command_name, command_contents
-/// ```
-/// Where each line represents one command to be restored.
+/// The exported file uses a simple format where each line contains:
+/// `command_name, command_contents`
+use crate::cmds::tools::retrieve_commands; // Command listing functionality
 use crate::utils::{
-    colors::COLORS,                              // Terminal color formatting
-    fs::{read_file_to_string, write_to_file},    // File operations
-    sys::{return_args, run_shell_command, VARS}, // System operations and variables
+    colors::COLORS,                           // Terminal color formatting
+    fs::{read_file_to_string, write_to_file}, // File operations
+    sys::{return_args, VARS},                 // System operations and variables
 };
 
-/// Imports commands from a backup file
+/// Exports all installed commands to a backup file
 ///
 /// This function:
-/// 1. Reads the specified backup file
-/// 2. Parses each line for command name and contents
+/// 1. Takes an output directory path from command arguments
+/// 2. Retrieves all installed commands
 /// 3. For each command:
-///    - Creates the command file
-///    - Sets executable permissions
-///    - Creates system symlinks
+///    - Reads its contents
+///    - Writes name and contents to the export file
+/// 4. Creates a single export.cmdcreate file containing all commands
 ///
 /// # Usage
 /// ```bash
-/// cmdcreate import <backup_file>
+/// cmdcreate export <output_directory>
 /// ```
 ///
-/// # File Format
-/// Each line in the backup file should be in the format:
+/// # Export Format
+/// The export file contains one command per line in the format:
 /// ```text
 /// command_name, command_contents
 /// ```
-pub fn imp() {
+///
+pub fn expo() {
+    use std::path::Path;
+
     // Terminal color codes
     let (blue, yellow, green, reset) = (COLORS.blue, COLORS.yellow, COLORS.green, COLORS.reset);
     let args = return_args();
 
-    // Ensure the user provided an input file
+    // Ensure the user provided an output directory
     if args.len() < 2 {
-        println!("Usage:\ncmdcreate {blue}import {yellow}<input file>{reset}");
+        println!("Usage:\ncmdcreate {blue}export {yellow}<output directory>{reset}");
         return;
     }
 
-    // Read the import file into a string
-    let contents = read_file_to_string(&args[1]);
+    // Construct the full path to the export file
+    let export_file = Path::new(args.get(1).unwrap()).join("export.cmdcreate");
 
-    // Exit if the file is empty or unreadable
-    if contents.trim().is_empty() {
-        println!("{yellow}Import file is empty or unreadable.{reset}");
-        return;
-    }
+    // Read the favorites list for marking favorite commands
+    let favorites = read_file_to_string(&format!("{}/.local/share/cmdcreate/favorites", VARS.home));
 
-    // Process each line in the import file
-    for line in contents.replace("[|", "|").lines() {
-        let parts: Vec<&str> = line.split('|').map(|s| s.trim()).collect();
+    // Iterate over all installed commands
+    for script in retrieve_commands("installed") {
+        if let Some(stem) = script.file_stem() {
+            let cmd = stem.to_string_lossy();
 
-        if line.trim().is_empty() && !parts.is_empty() {
-            continue; // Split the line into command name and contents and skip empty lines
-        }
+            // Read the command's file content
+            let mut cmd_contents =
+                read_file_to_string(&format!("{}/.local/share/cmdcreate/files/{cmd}", VARS.home));
 
-        let name = parts[0]; // Command name
-        let mut data = String::new(); // Command content
-        let mut favorite = false; // Favorite flag
+            // Escape any '|' characters in the command contents
+            cmd_contents = cmd_contents.replace("|", "[|");
 
-        // Parse additional parts (script content or "favorite" tag)
-        for part in parts.iter().skip(1) {
-            if *part == "favorite" {
-                favorite = true; // Mark as favorite
-            } else if !part.is_empty() {
-                // Append line to the command data
-                if !data.is_empty() {
-                    data.push(' ');
-                }
-                data.push_str(part);
-            }
-        }
+            // Format the line to include favorite marker if applicable
+            let line = if favorites.contains(cmd.as_ref()) {
+                format!("{cmd} | {cmd_contents} | favorite\n")
+            } else {
+                format!("{cmd} | {cmd_contents}\n")
+            };
 
-        println!("{blue}Installing command: \"{green}{name}{reset}\"");
-
-        // Path to store the command locally
-        let script_path = format!("{}/.local/share/cmdcreate/files/{}", VARS.home, name);
-
-        // Write the command data to the file
-        write_to_file(&script_path, &data);
-
-        // Make the file executable and link to /usr/bin
-        run_shell_command(&format!(
-            "chmod +x {script_path}; sudo ln -sf {script_path} /usr/bin/{name}"
-        ));
-
-        // Add command to favorites if flagged
-        if favorite {
-            write_to_file(
-                &format!("{}/.local/share/cmdcreate/favorites", VARS.home),
-                &format!("{name}\n"),
-            );
+            // Write the command data to the export file
+            write_to_file(export_file.to_str().unwrap(), &line);
         }
     }
 
-    // Final success message
-    println!("\n{green}Successfully imported commands.{reset}");
+    // Print final success message
+    println!(
+        "{green}Successfully exported commands to:{blue} \"{}\"{green}.{reset}",
+        export_file.display()
+    );
 }
