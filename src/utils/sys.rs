@@ -88,8 +88,8 @@ pub fn run_shell_command(cmd: &str) {
     {
         Ok(_) => {} // Command executed successfully
         Err(e) => {
-            // Report error using cmdcreate's error system
-            error("", &e.to_string());
+            // Report error
+            error("Failed to run shell command:", &e.to_string());
         }
     }
 }
