@@ -1,3 +1,5 @@
+//use std::path::Path;
+
 /// Module for exporting installed commands in cmdcreate
 ///
 /// This module provides functionality to export all installed commands
@@ -33,38 +35,53 @@ use crate::utils::{
 /// ```text
 /// command_name, command_contents
 /// ```
+///
 pub fn export() {
-    // Initialize color codes for terminal output formatting
-    let (blue, yellow, green, reset) = (COLORS.blue, COLORS.yellow, COLORS.green, COLORS.reset);
+    use std::path::Path;
 
-    // Get command line arguments and validate argument count
+    // Terminal color codes
+    let (blue, yellow, green, reset) = (COLORS.blue, COLORS.yellow, COLORS.green, COLORS.reset);
     let args = return_args();
+
+    // Ensure the user provided an output directory
     if args.len() < 2 {
         println!("Usage:\ncmdcreate {blue}export {yellow}<output directory>{reset}");
         return;
     }
 
-    // Extract the output directory path from arguments
-    let output_path = args.get(1).unwrap();
+    // Construct the full path to the export file
+    let export_file = Path::new(args.get(1).unwrap()).join("export.cmdcreate");
 
-    // Process each installed command and write to export file
+    // Read the favorites list for marking favorite commands
+    let favorites = read_file_to_string(&format!("{}/.local/share/cmdcreate/favorites", VARS.home));
+
+    // Iterate over all installed commands
     for script in retrieve_commands("installed") {
-        // Extract command name from file path
-        let cmd = script.file_stem().unwrap_or_default().to_string_lossy();
+        if let Some(stem) = script.file_stem() {
+            let cmd = stem.to_string_lossy();
 
-        // Read the command's contents from its installation location
-        let cmd_contents =
-            read_file_to_string(&format!("{}/.local/share/cmdcreate/files/{cmd}", VARS.home));
+            // Read the command's file content
+            let mut cmd_contents =
+                read_file_to_string(&format!("{}/.local/share/cmdcreate/files/{cmd}", VARS.home));
 
-        // Write the command and its contents to the export file
-        write_to_file(
-            &format!("{output_path}/export.cmdcreate"),
-            &format!("{cmd}, {cmd_contents}"),
-        );
+            // Escape any '|' characters in the command contents
+            cmd_contents = cmd_contents.replace("|", "[|");
+
+            // Format the line to include favorite marker if applicable
+            let line = if favorites.contains(cmd.as_ref()) {
+                format!("{cmd} | {cmd_contents} | favorite\n")
+            } else {
+                format!("{cmd} | {cmd_contents}\n")
+            };
+
+            // Write the command data to the export file
+            write_to_file(export_file.to_str().unwrap(), &line);
+        }
     }
 
-    // Confirm successful export to user with the file location
+    // Print final success message
     println!(
-        "{green}Successfully exported installed commands to:{blue} \"{output_path}export.cmdcreate\"{green}.{reset}"
-    )
+        "{green}Successfully exported commands to:{blue} \"{}\"{green}.{reset}",
+        export_file.display()
+    );
 }
