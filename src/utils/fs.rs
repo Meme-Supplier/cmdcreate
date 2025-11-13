@@ -9,7 +9,7 @@
 /// - Create folders and files, including parent directories
 /// - Delete files and folders safely
 use std::{
-    fs::{self, File},
+    fs::{self, File, OpenOptions},
     io::Write,
     path::Path,
 };
@@ -37,10 +37,23 @@ pub fn read_file_to_string(file_path: &str) -> String {
 /// * `path` - Path to the file
 /// * `contents` - String data to write
 pub fn write_to_file(path: &str, contents: &str) {
-    // Attempt to create the file
-    let mut file = File::create(path).expect("Failed to create the file");
+    let mut file = OpenOptions::new()
+        .create(true) // make the file if it doesn't exist
+        .append(true) // write at the end instead of overwriting
+        .open(path)
+        .expect("Failed to open or create file");
 
-    // Write contents to the file
+    file.write_all(contents.as_bytes())
+        .expect("Failed to write to file");
+}
+
+/// Overwrites a file with new contents
+///
+/// # Arguments
+/// * `path` - Path to the file
+/// * `contents` - String data to write
+pub fn overwrite_file(path: &str, contents: &str) {
+    let mut file = File::create(path).expect("Failed to overwrite file");
     file.write_all(contents.as_bytes())
         .expect("Failed to write to file");
 }
@@ -51,14 +64,9 @@ pub fn write_to_file(path: &str, contents: &str) {
 /// * `path` - Path to the file
 /// * `contents` - String data to remove
 pub fn remove_from_file(path: &str, contents: &str) {
-    // Read the current contents of the file
     let current_contents = read_file_to_string(path);
-
-    // Remove the specified contents
     let new_contents = current_contents.replace(contents, "");
-
-    // Write the updated contents back to the file
-    write_to_file(path, &new_contents);
+    overwrite_file(path, &new_contents);
 }
 
 /// Checks if a file/folder path exists at the given path
