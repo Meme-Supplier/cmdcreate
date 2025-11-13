@@ -24,7 +24,7 @@ use crate::{
 };
 
 /// Current version of the project
-pub static PROJ_VER: &str = "v0.7.3";
+pub static PROJ_VER: &str = "v0.7.4";
 
 /// Main entry point for the cmdcreate application
 ///
