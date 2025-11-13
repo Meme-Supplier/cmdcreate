@@ -240,3 +240,7 @@
 - Exporting/importing commands should now work properly
 - Code optimizations
 - Other tweaks
+
+## v0.7.4-2
+
+- AUR users: compile error
