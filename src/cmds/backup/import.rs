@@ -1,6 +1,6 @@
-//! Module for importing commands from backup files in cmdcreate
-//!
-//! This module provides functionality to restore commands from a backup file
+/// Module for importing commands from backup files in cmdcreate
+///
+/// This module provides functionality to restore commands from a backup file
 /// created by the export function. It processes the backup file, recreates
 /// the commands in the system, and sets up proper permissions and symlinks.
 ///
@@ -35,51 +35,73 @@ use crate::utils::{
 /// ```text
 /// command_name, command_contents
 /// ```
-pub fn import() {
-    // Initialize color codes for terminal output formatting
+pub fn imp() {
+    // Terminal color codes
     let (blue, yellow, green, reset) = (COLORS.blue, COLORS.yellow, COLORS.green, COLORS.reset);
-
-    // Get command line arguments and validate argument count
     let args = return_args();
+
+    // Ensure the user provided an input file
     if args.len() < 2 {
         println!("Usage:\ncmdcreate {blue}import {yellow}<input file>{reset}");
         return;
     }
 
-    // Get the backup file path and read its contents
-    let import_file = &args[1];
-    let contents = read_file_to_string(import_file);
+    // Read the import file into a string
+    let contents = read_file_to_string(&args[1]);
 
-    // Process each line in the backup file
-    for line in contents.lines() {
-        // Skip invalid lines that don't contain the separator
-        if !line.contains(',') {
-            continue;
-        }
-
-        // Split the line into command name and contents
-        let mut parts = line.splitn(2, ',');
-        let name = parts.next().unwrap().trim();
-        let data = parts.next().unwrap().trim();
-
-        // Display progress to user
-        println!("{blue}Installing command: \"{green}{name}{reset}\"");
-
-        // Create the command file in the installation directory
-        let script = format!("{}/.local/share/cmdcreate/files/{}", VARS.home, name);
-        write_to_file(&script, data);
-
-        // Set executable permissions and create system symlink
-        run_shell_command(&format!(
-            "
-            chmod +x {script}; \
-            sudo ln -sf {script} /usr/bin/{name}
-            ",
-        ));
+    // Exit if the file is empty or unreadable
+    if contents.trim().is_empty() {
+        println!("{yellow}Import file is empty or unreadable.{reset}");
+        return;
     }
 
-    // Confirm successful import to user with the source file
-    println!(
-        "\n{green}Successfully imported commands from: {blue}\"{import_file}\"{green}.{reset}"
-    );
+    // Process each line in the import file
+    for line in contents.replace("[|", "|").lines() {
+        let parts: Vec<&str> = line.split('|').map(|s| s.trim()).collect();
+
+        if line.trim().is_empty() && !parts.is_empty() {
+            continue; // Split the line into command name and contents and skip empty lines
+        }
+
+        let name = parts[0]; // Command name
+        let mut data = String::new(); // Command content
+        let mut favorite = false; // Favorite flag
+
+        // Parse additional parts (script content or "favorite" tag)
+        for part in parts.iter().skip(1) {
+            if *part == "favorite" {
+                favorite = true; // Mark as favorite
+            } else if !part.is_empty() {
+                // Append line to the command data
+                if !data.is_empty() {
+                    data.push(' ');
+                }
+                data.push_str(part);
+            }
+        }
+
+        println!("{blue}Installing command: \"{green}{name}{reset}\"");
+
+        // Path to store the command locally
+        let script_path = format!("{}/.local/share/cmdcreate/files/{}", VARS.home, name);
+
+        // Write the command data to the file
+        write_to_file(&script_path, &data);
+
+        // Make the file executable and link to /usr/bin
+        run_shell_command(&format!(
+            "chmod +x {script_path}; sudo ln -sf {script_path} /usr/bin/{name}"
+        ));
+
+        // Add command to favorites if flagged
+        if favorite {
+            write_to_file(
+                &format!("{}/.local/share/cmdcreate/favorites", VARS.home),
+                &format!("{name}\n"),
+            );
+        }
+    }
+
+    // Final success message
+    println!("\n{green}Successfully imported commands.{reset}");
 }
