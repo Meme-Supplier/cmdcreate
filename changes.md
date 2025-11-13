@@ -234,3 +234,9 @@
 
 - Updated information about updates
 - Code optimizations
+
+## v0.7.4
+
+- Exporting/importing commands should now work properly
+- Code optimizations
+- Other tweaks
