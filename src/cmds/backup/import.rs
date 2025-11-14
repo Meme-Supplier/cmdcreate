@@ -35,7 +35,7 @@ use crate::utils::{
 /// ```text
 /// command_name, command_contents
 /// ```
-pub fn imp() {
+pub fn import() {
     // Terminal color codes
     let (blue, yellow, green, reset) = (COLORS.blue, COLORS.yellow, COLORS.green, COLORS.reset);
     let args = return_args();
@@ -73,8 +73,8 @@ pub fn imp() {
                 favorite = true; // Mark as favorite
             } else if !part.is_empty() {
                 // Append line to the command data
-                if !data.is_empty() {
-                    data.push(' ');
+                if data.is_empty() {
+                    data.push('\n');
                 }
                 data.push_str(part);
             }
@@ -82,7 +82,7 @@ pub fn imp() {
 
         println!("{blue}Installing command: \"{green}{name}{reset}\"");
 
-        // Path to store the command locally
+        // Path to store the command
         let script_path = format!("{}/.local/share/cmdcreate/files/{}", VARS.home, name);
 
         // Write the command data to the file
