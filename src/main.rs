@@ -24,7 +24,7 @@ use crate::{
 };
 
 /// Current version of the project
-pub static PROJ_VER: &str = "v0.7.4-2";
+pub static PROJ_VER: &str = "v0.7.5";
 
 /// Main entry point for the cmdcreate application
 ///
@@ -73,11 +73,11 @@ fn main() {
 
         // System Operations
         "check" => check_for_updates(), // Check for available updates
-        "update" => upgrader::upgrade(), // Perform system upgrade
+        "update" => upgrade(),          // Perform system upgrade
 
         // Backup Operations
-        "import" => import::imp(), // Import commands from backup
-        "export" => export::expo(), // Export commands to backup
+        "import" => import::import(), // Import commands from backup
+        "export" => export::export(), // Export commands to backup
 
         // Information Display Arguments
         "--version" | "-v" => println!("cmdcreate {PROJ_VER}"), // Display version information
