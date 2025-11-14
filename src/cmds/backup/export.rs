@@ -34,14 +34,14 @@ use crate::utils::{
 /// command_name, command_contents
 /// ```
 ///
-pub fn expo() {
+pub fn export() {
     use std::path::Path;
 
     // Terminal color codes
     let (blue, yellow, green, reset) = (COLORS.blue, COLORS.yellow, COLORS.green, COLORS.reset);
-    let args = return_args();
 
     // Ensure the user provided an output directory
+    let args = return_args();
     if args.len() < 2 {
         println!("Usage:\ncmdcreate {blue}export {yellow}<output directory>{reset}");
         return;
